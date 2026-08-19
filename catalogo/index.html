@@ -12,15 +12,25 @@
     --texto: #2b2320;
     --pill-bg: #fff1e4;
     --pill-border: #ffd9b8;
+    --largura-max: 480px;
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body {
     margin: 0;
     padding: 0;
-    background: var(--creme);
+    background: #e7e1d8; /* fundo neutro atrás da coluna, visível em telas largas */
     color: var(--texto);
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  /* ---- coluna única: no celular ocupa a tela toda; no desktop vira um cartão centralizado ---- */
+  #app {
+    max-width: var(--largura-max);
+    margin: 0 auto;
+    background: var(--creme);
+    min-height: 100vh;
+    box-shadow: 0 0 40px rgba(0,0,0,.12);
   }
 
   /* ---- topo fixo ---- */
@@ -85,20 +95,7 @@
 
   /* ---- seções de página ---- */
   .secao {
-    scroll-margin-top: 118px; /* compensa o header sticky */
-  }
-  .rotulo-secao {
-    padding: 22px 16px 8px;
-    font-size: 19px;
-    font-weight: 800;
-    color: var(--laranja-escuro);
-    text-align: center;
-  }
-  .subrotulo-secao {
-    padding: 4px 16px 12px;
-    font-size: 13px;
-    color: #8a7a6d;
-    text-align: center;
+    scroll-margin-top: 96px; /* compensa o header sticky */
   }
   .page-img {
     display: block;
@@ -119,7 +116,7 @@
 
   #voltar-topo {
     position: fixed;
-    right: 14px;
+    right: max(14px, calc(50vw - (var(--largura-max) / 2) + 14px));
     bottom: 14px;
     z-index: 20;
     background: var(--laranja-escuro);
@@ -142,6 +139,7 @@
 </head>
 <body>
 
+<div id="app">
 <header id="topo">
   <h1>Catálogo Thamy Festas <span>toque num grupo abaixo pra ir direto na página 🎈</span></h1>
   <nav id="menu">
@@ -180,159 +178,109 @@
   <img class="page-img" src="img/page-02.jpg" loading="lazy" alt="Sobre a Thamy Festas">
 
   <section id="mini-inflaveis" class="secao" data-pagina="3">
-    <p class="rotulo-secao">Mini Infláveis</p>
-    <p class="subrotulo-secao">página 3 · perfeitos para os menores</p>
     <img class="page-img" src="img/page-03.jpg" loading="lazy" alt="Mini Infláveis - página 3">
   </section>
 
   <section id="tobogas" class="secao" data-pagina="4">
-    <p class="rotulo-secao">Tobogãs</p>
-    <p class="subrotulo-secao">páginas 4 a 5</p>
     <img class="page-img" src="img/page-04.jpg" loading="lazy" alt="Tobogãs - página 4">
     <img class="page-img" src="img/page-05.jpg" loading="lazy" alt="Tobogãs - página 5">
   </section>
 
   <section id="castelos" class="secao" data-pagina="6">
-    <p class="rotulo-secao">Castelos Infláveis</p>
-    <p class="subrotulo-secao">página 6</p>
     <img class="page-img" src="img/page-06.jpg" loading="lazy" alt="Castelos Infláveis - página 6">
   </section>
 
   <section id="meninas" class="secao" data-pagina="7">
-    <p class="rotulo-secao">Para as Meninas</p>
-    <p class="subrotulo-secao">páginas 7 a 9 · rosa, coração, princesas e mais</p>
     <img class="page-img" src="img/page-07.jpg" loading="lazy" alt="Para as Meninas - página 7">
     <img class="page-img" src="img/page-08.jpg" loading="lazy" alt="Para as Meninas - página 8">
     <img class="page-img" src="img/page-09.jpg" loading="lazy" alt="Para as Meninas - página 9">
   </section>
 
   <section id="personalizado-mickey" class="secao" data-pagina="10">
-    <p class="rotulo-secao">Personalizados · Mickey</p>
-    <p class="subrotulo-secao">página 10</p>
     <img class="page-img" src="img/page-10.jpg" loading="lazy" alt="Personalizados Mickey - página 10">
   </section>
 
   <section id="personalizado-patrulha" class="secao" data-pagina="11">
-    <p class="rotulo-secao">Personalizados · Patrulha Canina</p>
-    <p class="subrotulo-secao">página 11</p>
     <img class="page-img" src="img/page-11.jpg" loading="lazy" alt="Personalizados Patrulha Canina - página 11">
   </section>
 
   <section id="personalizado-dino" class="secao" data-pagina="12">
-    <p class="rotulo-secao">Personalizados · Dinossauros</p>
-    <p class="subrotulo-secao">página 12</p>
     <img class="page-img" src="img/page-12.jpg" loading="lazy" alt="Personalizados Dinossauros - página 12">
   </section>
 
   <section id="personalizado-aranha" class="secao" data-pagina="13">
-    <p class="rotulo-secao">Personalizados · Homem-Aranha</p>
-    <p class="subrotulo-secao">página 13</p>
     <img class="page-img" src="img/page-13.jpg" loading="lazy" alt="Personalizados Homem-Aranha - página 13">
   </section>
 
   <section id="personalizado-safari" class="secao" data-pagina="14">
-    <p class="rotulo-secao">Personalizados · Safari</p>
-    <p class="subrotulo-secao">página 14</p>
     <img class="page-img" src="img/page-14.jpg" loading="lazy" alt="Personalizados Safari - página 14">
   </section>
 
   <section id="personalizado-pirata" class="secao" data-pagina="15">
-    <p class="rotulo-secao">Personalizados · Piratas &amp; Mar</p>
-    <p class="subrotulo-secao">página 15</p>
     <img class="page-img" src="img/page-15.jpg" loading="lazy" alt="Personalizados Piratas e Mar - página 15">
   </section>
 
   <section id="personalizado-carros" class="secao" data-pagina="16">
-    <p class="rotulo-secao">Personalizados · Carros</p>
-    <p class="subrotulo-secao">página 16</p>
     <img class="page-img" src="img/page-16.jpg" loading="lazy" alt="Personalizados Carros - página 16">
   </section>
 
   <section id="personalizado-batman" class="secao" data-pagina="17">
-    <p class="rotulo-secao">Personalizados · Batman</p>
-    <p class="subrotulo-secao">página 17</p>
     <img class="page-img" src="img/page-17.jpg" loading="lazy" alt="Personalizados Batman - página 17">
   </section>
 
   <section id="personalizado-circo" class="secao" data-pagina="18">
-    <p class="rotulo-secao">Personalizados · Circo &amp; Toy Story</p>
-    <p class="subrotulo-secao">página 18</p>
     <img class="page-img" src="img/page-18.jpg" loading="lazy" alt="Personalizados Circo e Toy Story - página 18">
   </section>
 
   <section id="personalizado-fazenda" class="secao" data-pagina="19">
-    <p class="rotulo-secao">Personalizados · Fazendinha &amp; Tigre</p>
-    <p class="subrotulo-secao">página 19</p>
     <img class="page-img" src="img/page-19.jpg" loading="lazy" alt="Personalizados Fazendinha e Tigre - página 19">
   </section>
 
   <section id="multi-atividades" class="secao" data-pagina="20">
-    <p class="rotulo-secao">Multi Atividades</p>
-    <p class="subrotulo-secao">página 20</p>
     <img class="page-img" src="img/page-20.jpg" loading="lazy" alt="Multi Atividades - página 20">
   </section>
 
   <section id="circuito" class="secao" data-pagina="21">
-    <p class="rotulo-secao">Circuito Inflável</p>
-    <p class="subrotulo-secao">página 21</p>
     <img class="page-img" src="img/page-21.jpg" loading="lazy" alt="Circuito Inflável - página 21">
   </section>
 
   <section id="mecanicos" class="secao" data-pagina="22">
-    <p class="rotulo-secao">Brinquedos Mecânicos</p>
-    <p class="subrotulo-secao">páginas 22 a 23 · touros mecânicos e radicais</p>
     <img class="page-img" src="img/page-22.jpg" loading="lazy" alt="Brinquedos Mecânicos - página 22">
     <img class="page-img" src="img/page-23.jpg" loading="lazy" alt="Brinquedos Mecânicos - página 23">
   </section>
 
   <section id="esportivos" class="secao" data-pagina="24">
-    <p class="rotulo-secao">Brinquedos Esportivos</p>
-    <p class="subrotulo-secao">páginas 24 a 25</p>
     <img class="page-img" src="img/page-24.jpg" loading="lazy" alt="Brinquedos Esportivos - página 24">
     <img class="page-img" src="img/page-25.jpg" loading="lazy" alt="Brinquedos Esportivos - página 25">
   </section>
 
   <section id="aquaticos" class="secao" data-pagina="26">
-    <p class="rotulo-secao">Brinquedos Aquáticos</p>
-    <p class="subrotulo-secao">páginas 26 a 27</p>
     <img class="page-img" src="img/page-26.jpg" loading="lazy" alt="Brinquedos Aquáticos - página 26">
     <img class="page-img" src="img/page-27.jpg" loading="lazy" alt="Brinquedos Aquáticos - página 27">
   </section>
 
   <section id="futebol-sabao" class="secao" data-pagina="28">
-    <p class="rotulo-secao">Futebol de Sabão</p>
-    <p class="subrotulo-secao">página 28</p>
     <img class="page-img" src="img/page-28.jpg" loading="lazy" alt="Futebol de Sabão - página 28">
   </section>
 
   <section id="exclusivos" class="secao" data-pagina="29">
-    <p class="rotulo-secao">Brinquedos Exclusivos</p>
-    <p class="subrotulo-secao">página 29 · linha premium</p>
     <img class="page-img" src="img/page-29.jpg" loading="lazy" alt="Brinquedos Exclusivos - página 29">
   </section>
 
   <section id="jogos-mesa" class="secao" data-pagina="30">
-    <p class="rotulo-secao">Jogos de Mesa</p>
-    <p class="subrotulo-secao">página 30 · montagem apenas em local interno</p>
     <img class="page-img" src="img/page-30.jpg" loading="lazy" alt="Jogos de Mesa - página 30">
   </section>
 
   <section id="cama-elastica" class="secao" data-pagina="31">
-    <p class="rotulo-secao">Cama Elástica</p>
-    <p class="subrotulo-secao">páginas 31 a 32</p>
     <img class="page-img" src="img/page-31.jpg" loading="lazy" alt="Cama Elástica - página 31">
     <img class="page-img" src="img/page-32.jpg" loading="lazy" alt="Cama Elástica - página 32">
   </section>
 
   <section id="piscina-bolinhas" class="secao" data-pagina="33">
-    <p class="rotulo-secao">Piscina de Bolinhas</p>
-    <p class="subrotulo-secao">página 33</p>
     <img class="page-img" src="img/page-33.jpg" loading="lazy" alt="Piscina de Bolinhas - página 33">
   </section>
 
   <section id="area-baby" class="secao" data-pagina="34">
-    <p class="rotulo-secao">Área Baby</p>
-    <p class="subrotulo-secao">página 34 · montagem apenas em local interno</p>
     <img class="page-img" src="img/page-34.jpg" loading="lazy" alt="Área Baby - página 34">
   </section>
 </main>
@@ -341,6 +289,7 @@
   Consulte a #EquipeLaranja e confira a melhor opção pra faixa etária do seu evento.<br>
   <a href="https://wa.me/554184483455" target="_blank" rel="noopener">Fale com a Thamy Festas no WhatsApp</a>
 </footer>
+</div><!-- /#app -->
 
 <a id="voltar-topo" href="#topo" aria-label="Voltar ao topo">↑</a>
 
