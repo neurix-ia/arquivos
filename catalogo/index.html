@@ -3,36 +3,373 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Catálogo Thamy Festas</title>
+<title>Catálogo Thamy Festas 2026</title>
 <style>
+  :root {
+    --laranja: #ff6a1a;
+    --laranja-escuro: #e8590c;
+    --creme: #fff8f0;
+    --texto: #2b2320;
+    --pill-bg: #fff1e4;
+    --pill-border: #ffd9b8;
+  }
   * { box-sizing: border-box; }
-  body { margin:0; padding:0; background:#111; font-family: -apple-system, 'Segoe UI', Roboto, sans-serif; }
-  .page-img { display:block; width:100%; height:auto; aspect-ratio: 800 / 1422; }
-  .section-anchor { display:block; position:relative; top:-10px; }
-  #top-bar { position:sticky; top:0; z-index:10; background:#ff7a1a; color:#fff; text-align:center; padding:10px; font-weight:bold; font-size:15px; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    padding: 0;
+    background: var(--creme);
+    color: var(--texto);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  /* ---- topo fixo ---- */
+  #topo {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: linear-gradient(135deg, var(--laranja), var(--laranja-escuro));
+    box-shadow: 0 2px 10px rgba(0,0,0,.15);
+  }
+  #topo h1 {
+    margin: 0;
+    padding: 12px 16px 8px;
+    color: #fff;
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: .2px;
+    text-align: center;
+  }
+  #topo h1 span { opacity: .85; font-weight: 500; font-size: 13px; display: block; margin-top: 2px; }
+
+  #menu {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 0 12px 12px;
+    scrollbar-width: none;
+  }
+  #menu::-webkit-scrollbar { display: none; }
+
+  .pill {
+    flex: 0 0 auto;
+    background: rgba(255,255,255,.16);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,.35);
+    border-radius: 999px;
+    padding: 7px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+    text-decoration: none;
+    transition: background .15s ease, transform .1s ease;
+  }
+  .pill:active { transform: scale(.96); }
+  .pill.ativo {
+    background: #fff;
+    color: var(--laranja-escuro);
+  }
+  .pill.sub {
+    background: rgba(255,255,255,.08);
+    font-weight: 500;
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+  .separador-menu {
+    flex: 0 0 auto;
+    width: 1px;
+    background: rgba(255,255,255,.3);
+    margin: 4px 2px;
+  }
+
+  /* ---- seções de página ---- */
+  .secao {
+    scroll-margin-top: 118px; /* compensa o header sticky */
+  }
+  .rotulo-secao {
+    padding: 22px 16px 8px;
+    font-size: 19px;
+    font-weight: 800;
+    color: var(--laranja-escuro);
+    text-align: center;
+  }
+  .subrotulo-secao {
+    padding: 4px 16px 12px;
+    font-size: 13px;
+    color: #8a7a6d;
+    text-align: center;
+  }
+  .page-img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  /* ---- rodapé ---- */
+  #rodape {
+    background: #2b2320;
+    color: #fff2e6;
+    text-align: center;
+    padding: 28px 16px 36px;
+    font-size: 13px;
+    line-height: 1.7;
+  }
+  #rodape a { color: #ffb27a; text-decoration: none; font-weight: 600; }
+
+  #voltar-topo {
+    position: fixed;
+    right: 14px;
+    bottom: 14px;
+    z-index: 20;
+    background: var(--laranja-escuro);
+    color: #fff;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 18px;
+    box-shadow: 0 3px 10px rgba(0,0,0,.3);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .2s ease;
+  }
+  #voltar-topo.visivel { opacity: 1; pointer-events: auto; }
 </style>
 </head>
 <body>
-<div id="top-bar">Catálogo Thamy Festas 🎈</div>
-<img class="page-img" src="img/page-01.jpg" loading="lazy" alt="Capa - página 1"><img class="page-img" src="img/page-02.jpg" loading="lazy" alt="Capa - página 2"><img class="page-img" src="img/page-02.jpg" loading="lazy" alt="Sobre Nós - página 2"><span id="castelos" class="section-anchor"></span><img class="page-img" src="img/page-03.jpg" loading="lazy" alt="Castelos - página 3"><img class="page-img" src="img/page-04.jpg" loading="lazy" alt="Castelos - página 4"><img class="page-img" src="img/page-05.jpg" loading="lazy" alt="Castelos - página 5"><img class="page-img" src="img/page-06.jpg" loading="lazy" alt="Castelos - página 6"><img class="page-img" src="img/page-07.jpg" loading="lazy" alt="Castelos - página 7"><span id="mini-castelos" class="section-anchor"></span><img class="page-img" src="img/page-08.jpg" loading="lazy" alt="Mini Castelos - página 8"><img class="page-img" src="img/page-09.jpg" loading="lazy" alt="Mini Castelos - página 9"><img class="page-img" src="img/page-10.jpg" loading="lazy" alt="Mini Castelos - página 10"><img class="page-img" src="img/page-11.jpg" loading="lazy" alt="Mini Castelos - página 11"><span id="multi-atividades-bolinhas" class="section-anchor"></span><img class="page-img" src="img/page-12.jpg" loading="lazy" alt="Multi Atividades com Bolinhas - página 12"><img class="page-img" src="img/page-13.jpg" loading="lazy" alt="Multi Atividades com Bolinhas - página 13"><img class="page-img" src="img/page-14.jpg" loading="lazy" alt="Multi Atividades com Bolinhas - página 14"><img class="page-img" src="img/page-15.jpg" loading="lazy" alt="Multi Atividades com Bolinhas - página 15"><img class="page-img" src="img/page-16.jpg" loading="lazy" alt="Multi Atividades com Bolinhas - página 16"><img class="page-img" src="img/page-17.jpg" loading="lazy" alt="Multi Atividades com Bolinhas - página 17"><img class="page-img" src="img/page-18.jpg" loading="lazy" alt="Multi Atividades com Bolinhas - página 18"><span id="multi-atividades" class="section-anchor"></span><img class="page-img" src="img/page-19.jpg" loading="lazy" alt="Multi Atividades - página 19"><img class="page-img" src="img/page-20.jpg" loading="lazy" alt="Multi Atividades - página 20"><img class="page-img" src="img/page-21.jpg" loading="lazy" alt="Multi Atividades - página 21"><img class="page-img" src="img/page-22.jpg" loading="lazy" alt="Multi Atividades - página 22"><img class="page-img" src="img/page-23.jpg" loading="lazy" alt="Multi Atividades - página 23"><img class="page-img" src="img/page-24.jpg" loading="lazy" alt="Multi Atividades - página 24"><span id="multi-atividades-importadas" class="section-anchor"></span><img class="page-img" src="img/page-25.jpg" loading="lazy" alt="Multi Atividades Importados - página 25"><img class="page-img" src="img/page-26.jpg" loading="lazy" alt="Multi Atividades Importados - página 26"><img class="page-img" src="img/page-27.jpg" loading="lazy" alt="Multi Atividades Importados - página 27"><img class="page-img" src="img/page-28.jpg" loading="lazy" alt="Multi Atividades Importados - página 28"><span id="mini-toboga" class="section-anchor"></span><img class="page-img" src="img/page-29.jpg" loading="lazy" alt="Mini Tobogã - página 29"><span id="toboga-medio" class="section-anchor"></span><img class="page-img" src="img/page-30.jpg" loading="lazy" alt="Tobogã Médio - página 30"><span id="toboga-grande" class="section-anchor"></span><img class="page-img" src="img/page-31.jpg" loading="lazy" alt="Tobogã Grande - página 31"><img class="page-img" src="img/page-32.jpg" loading="lazy" alt="Tobogã Grande - página 32"><img class="page-img" src="img/page-33.jpg" loading="lazy" alt="Tobogã Grande - página 33"><img class="page-img" src="img/page-34.jpg" loading="lazy" alt="Tobogã Grande - página 34"><span id="toboga-bolinhas" class="section-anchor"></span><img class="page-img" src="img/page-35.jpg" loading="lazy" alt="Tobogã com Bolinhas - página 35"><span id="toboga-mega" class="section-anchor"></span><img class="page-img" src="img/page-36.jpg" loading="lazy" alt="Tobogã Mega - página 36"><img class="page-img" src="img/page-37.jpg" loading="lazy" alt="Tobogã Mega - página 37"><span id="brinquedos-esportivos" class="section-anchor"></span><img class="page-img" src="img/page-38.jpg" loading="lazy" alt="Brinquedos Esportivos - página 38"><img class="page-img" src="img/page-39.jpg" loading="lazy" alt="Brinquedos Esportivos - página 39"><img class="page-img" src="img/page-40.jpg" loading="lazy" alt="Brinquedos Esportivos - página 40"><span id="touro-mecanico" class="section-anchor"></span><img class="page-img" src="img/page-41.jpg" loading="lazy" alt="Touro Mecânico - página 41"><img class="page-img" src="img/page-42.jpg" loading="lazy" alt="Touro Mecânico - página 42"><span id="piscina-bolinhas" class="section-anchor"></span><img class="page-img" src="img/page-43.jpg" loading="lazy" alt="Piscina de Bolinhas - página 43"><img class="page-img" src="img/page-44.jpg" loading="lazy" alt="Piscina de Bolinhas - página 44"><img class="page-img" src="img/page-45.jpg" loading="lazy" alt="Piscina de Bolinhas - página 45"><span id="piscina-bolinhas-escorregador" class="section-anchor"></span><img class="page-img" src="img/page-46.jpg" loading="lazy" alt="Piscina de Bolinhas com Escorregador - página 46"><img class="page-img" src="img/page-47.jpg" loading="lazy" alt="Piscina de Bolinhas com Escorregador - página 47"><span id="area-baby" class="section-anchor"></span><img class="page-img" src="img/page-48.jpg" loading="lazy" alt="Área Baby - página 48"><span id="jogos-inflaveis" class="section-anchor"></span><img class="page-img" src="img/page-49.jpg" loading="lazy" alt="Jogos Infláveis - página 49"><span id="jogos" class="section-anchor"></span><img class="page-img" src="img/page-50.jpg" loading="lazy" alt="Jogos - página 50"><img class="page-img" src="img/page-51.jpg" loading="lazy" alt="Jogos - página 51"><img class="page-img" src="img/page-52.jpg" loading="lazy" alt="Jogos - página 52"><span id="brinquedos-aquaticos" class="section-anchor"></span><img class="page-img" src="img/page-53.jpg" loading="lazy" alt="Brinquedos Aquáticos - página 53"><img class="page-img" src="img/page-54.jpg" loading="lazy" alt="Brinquedos Aquáticos - página 54"><img class="page-img" src="img/page-55.jpg" loading="lazy" alt="Brinquedos Aquáticos - página 55"><img class="page-img" src="img/page-56.jpg" loading="lazy" alt="Brinquedos Aquáticos - página 56"><span id="cama-elastica" class="section-anchor"></span><img class="page-img" src="img/page-57.jpg" loading="lazy" alt="Cama Elástica - página 57"><img class="page-img" src="img/page-58.jpg" loading="lazy" alt="Cama Elástica - página 58"><span id="cama-elastica-coberta" class="section-anchor"></span><img class="page-img" src="img/page-59.jpg" loading="lazy" alt="Cama Elástica Coberta - página 59"><span id="aviso" class="section-anchor"></span><img class="page-img" src="img/page-60.jpg" loading="lazy" alt="Avisos - página 60"><img class="page-img" src="img/page-61.jpg" loading="lazy" alt="Avisos - página 61"><img class="page-img" src="img/page-62.jpg" loading="lazy" alt="Avisos - página 62"><span id="toboga" class="section-anchor" style="display:none" data-target-page="29"></span><span id="futebol-de-sabao" class="section-anchor" style="display:none" data-target-page="53"></span><span id="personalizado-mickey-minnie" class="section-anchor" style="display:none" data-target-page="4"></span><span id="personalizado-patrulha-canina" class="section-anchor" style="display:none" data-target-page="6"></span><span id="personalizado-dino" class="section-anchor" style="display:none" data-target-page="12"></span><span id="personalizado-homem-aranha" class="section-anchor" style="display:none" data-target-page="11"></span><span id="personalizado-princesas" class="section-anchor" style="display:none" data-target-page="15"></span>
+
+<header id="topo">
+  <h1>Catálogo Thamy Festas <span>toque num grupo abaixo pra ir direto na página 🎈</span></h1>
+  <nav id="menu">
+    <a class="pill" href="#mini-inflaveis" data-anchor="mini-inflaveis">Mini Infláveis</a>
+    <a class="pill" href="#tobogas" data-anchor="tobogas">Tobogãs</a>
+    <a class="pill" href="#castelos" data-anchor="castelos">Castelos</a>
+    <a class="pill" href="#meninas" data-anchor="meninas">Para as Meninas</a>
+    <span class="separador-menu"></span>
+    <a class="pill sub" href="#personalizado-mickey" data-anchor="personalizado-mickey">Mickey</a>
+    <a class="pill sub" href="#personalizado-patrulha" data-anchor="personalizado-patrulha">Patrulha Canina</a>
+    <a class="pill sub" href="#personalizado-dino" data-anchor="personalizado-dino">Dinossauros</a>
+    <a class="pill sub" href="#personalizado-aranha" data-anchor="personalizado-aranha">Homem-Aranha</a>
+    <a class="pill sub" href="#personalizado-safari" data-anchor="personalizado-safari">Safari</a>
+    <a class="pill sub" href="#personalizado-pirata" data-anchor="personalizado-pirata">Piratas &amp; Mar</a>
+    <a class="pill sub" href="#personalizado-carros" data-anchor="personalizado-carros">Carros</a>
+    <a class="pill sub" href="#personalizado-batman" data-anchor="personalizado-batman">Batman</a>
+    <a class="pill sub" href="#personalizado-circo" data-anchor="personalizado-circo">Circo &amp; Toy Story</a>
+    <a class="pill sub" href="#personalizado-fazenda" data-anchor="personalizado-fazenda">Fazendinha &amp; Tigre</a>
+    <span class="separador-menu"></span>
+    <a class="pill" href="#multi-atividades" data-anchor="multi-atividades">Multi Atividades</a>
+    <a class="pill" href="#circuito" data-anchor="circuito">Circuito Inflável</a>
+    <a class="pill" href="#mecanicos" data-anchor="mecanicos">Mecânicos</a>
+    <a class="pill" href="#esportivos" data-anchor="esportivos">Esportivos</a>
+    <a class="pill" href="#aquaticos" data-anchor="aquaticos">Aquáticos</a>
+    <a class="pill" href="#futebol-sabao" data-anchor="futebol-sabao">Futebol de Sabão</a>
+    <a class="pill" href="#exclusivos" data-anchor="exclusivos">Exclusivos</a>
+    <a class="pill" href="#jogos-mesa" data-anchor="jogos-mesa">Jogos de Mesa</a>
+    <a class="pill" href="#cama-elastica" data-anchor="cama-elastica">Cama Elástica</a>
+    <a class="pill" href="#piscina-bolinhas" data-anchor="piscina-bolinhas">Piscina de Bolinhas</a>
+    <a class="pill" href="#area-baby" data-anchor="area-baby">Área Baby</a>
+  </nav>
+</header>
+
+<main>
+  <img class="page-img" src="img/page-01.jpg" loading="eager" alt="Capa do catálogo Thamy Festas 2026">
+  <img class="page-img" src="img/page-02.jpg" loading="lazy" alt="Sobre a Thamy Festas">
+
+  <section id="mini-inflaveis" class="secao" data-pagina="3">
+    <p class="rotulo-secao">Mini Infláveis</p>
+    <p class="subrotulo-secao">página 3 · perfeitos para os menores</p>
+    <img class="page-img" src="img/page-03.jpg" loading="lazy" alt="Mini Infláveis - página 3">
+  </section>
+
+  <section id="tobogas" class="secao" data-pagina="4">
+    <p class="rotulo-secao">Tobogãs</p>
+    <p class="subrotulo-secao">páginas 4 a 5</p>
+    <img class="page-img" src="img/page-04.jpg" loading="lazy" alt="Tobogãs - página 4">
+    <img class="page-img" src="img/page-05.jpg" loading="lazy" alt="Tobogãs - página 5">
+  </section>
+
+  <section id="castelos" class="secao" data-pagina="6">
+    <p class="rotulo-secao">Castelos Infláveis</p>
+    <p class="subrotulo-secao">página 6</p>
+    <img class="page-img" src="img/page-06.jpg" loading="lazy" alt="Castelos Infláveis - página 6">
+  </section>
+
+  <section id="meninas" class="secao" data-pagina="7">
+    <p class="rotulo-secao">Para as Meninas</p>
+    <p class="subrotulo-secao">páginas 7 a 9 · rosa, coração, princesas e mais</p>
+    <img class="page-img" src="img/page-07.jpg" loading="lazy" alt="Para as Meninas - página 7">
+    <img class="page-img" src="img/page-08.jpg" loading="lazy" alt="Para as Meninas - página 8">
+    <img class="page-img" src="img/page-09.jpg" loading="lazy" alt="Para as Meninas - página 9">
+  </section>
+
+  <section id="personalizado-mickey" class="secao" data-pagina="10">
+    <p class="rotulo-secao">Personalizados · Mickey</p>
+    <p class="subrotulo-secao">página 10</p>
+    <img class="page-img" src="img/page-10.jpg" loading="lazy" alt="Personalizados Mickey - página 10">
+  </section>
+
+  <section id="personalizado-patrulha" class="secao" data-pagina="11">
+    <p class="rotulo-secao">Personalizados · Patrulha Canina</p>
+    <p class="subrotulo-secao">página 11</p>
+    <img class="page-img" src="img/page-11.jpg" loading="lazy" alt="Personalizados Patrulha Canina - página 11">
+  </section>
+
+  <section id="personalizado-dino" class="secao" data-pagina="12">
+    <p class="rotulo-secao">Personalizados · Dinossauros</p>
+    <p class="subrotulo-secao">página 12</p>
+    <img class="page-img" src="img/page-12.jpg" loading="lazy" alt="Personalizados Dinossauros - página 12">
+  </section>
+
+  <section id="personalizado-aranha" class="secao" data-pagina="13">
+    <p class="rotulo-secao">Personalizados · Homem-Aranha</p>
+    <p class="subrotulo-secao">página 13</p>
+    <img class="page-img" src="img/page-13.jpg" loading="lazy" alt="Personalizados Homem-Aranha - página 13">
+  </section>
+
+  <section id="personalizado-safari" class="secao" data-pagina="14">
+    <p class="rotulo-secao">Personalizados · Safari</p>
+    <p class="subrotulo-secao">página 14</p>
+    <img class="page-img" src="img/page-14.jpg" loading="lazy" alt="Personalizados Safari - página 14">
+  </section>
+
+  <section id="personalizado-pirata" class="secao" data-pagina="15">
+    <p class="rotulo-secao">Personalizados · Piratas &amp; Mar</p>
+    <p class="subrotulo-secao">página 15</p>
+    <img class="page-img" src="img/page-15.jpg" loading="lazy" alt="Personalizados Piratas e Mar - página 15">
+  </section>
+
+  <section id="personalizado-carros" class="secao" data-pagina="16">
+    <p class="rotulo-secao">Personalizados · Carros</p>
+    <p class="subrotulo-secao">página 16</p>
+    <img class="page-img" src="img/page-16.jpg" loading="lazy" alt="Personalizados Carros - página 16">
+  </section>
+
+  <section id="personalizado-batman" class="secao" data-pagina="17">
+    <p class="rotulo-secao">Personalizados · Batman</p>
+    <p class="subrotulo-secao">página 17</p>
+    <img class="page-img" src="img/page-17.jpg" loading="lazy" alt="Personalizados Batman - página 17">
+  </section>
+
+  <section id="personalizado-circo" class="secao" data-pagina="18">
+    <p class="rotulo-secao">Personalizados · Circo &amp; Toy Story</p>
+    <p class="subrotulo-secao">página 18</p>
+    <img class="page-img" src="img/page-18.jpg" loading="lazy" alt="Personalizados Circo e Toy Story - página 18">
+  </section>
+
+  <section id="personalizado-fazenda" class="secao" data-pagina="19">
+    <p class="rotulo-secao">Personalizados · Fazendinha &amp; Tigre</p>
+    <p class="subrotulo-secao">página 19</p>
+    <img class="page-img" src="img/page-19.jpg" loading="lazy" alt="Personalizados Fazendinha e Tigre - página 19">
+  </section>
+
+  <section id="multi-atividades" class="secao" data-pagina="20">
+    <p class="rotulo-secao">Multi Atividades</p>
+    <p class="subrotulo-secao">página 20</p>
+    <img class="page-img" src="img/page-20.jpg" loading="lazy" alt="Multi Atividades - página 20">
+  </section>
+
+  <section id="circuito" class="secao" data-pagina="21">
+    <p class="rotulo-secao">Circuito Inflável</p>
+    <p class="subrotulo-secao">página 21</p>
+    <img class="page-img" src="img/page-21.jpg" loading="lazy" alt="Circuito Inflável - página 21">
+  </section>
+
+  <section id="mecanicos" class="secao" data-pagina="22">
+    <p class="rotulo-secao">Brinquedos Mecânicos</p>
+    <p class="subrotulo-secao">páginas 22 a 23 · touros mecânicos e radicais</p>
+    <img class="page-img" src="img/page-22.jpg" loading="lazy" alt="Brinquedos Mecânicos - página 22">
+    <img class="page-img" src="img/page-23.jpg" loading="lazy" alt="Brinquedos Mecânicos - página 23">
+  </section>
+
+  <section id="esportivos" class="secao" data-pagina="24">
+    <p class="rotulo-secao">Brinquedos Esportivos</p>
+    <p class="subrotulo-secao">páginas 24 a 25</p>
+    <img class="page-img" src="img/page-24.jpg" loading="lazy" alt="Brinquedos Esportivos - página 24">
+    <img class="page-img" src="img/page-25.jpg" loading="lazy" alt="Brinquedos Esportivos - página 25">
+  </section>
+
+  <section id="aquaticos" class="secao" data-pagina="26">
+    <p class="rotulo-secao">Brinquedos Aquáticos</p>
+    <p class="subrotulo-secao">páginas 26 a 27</p>
+    <img class="page-img" src="img/page-26.jpg" loading="lazy" alt="Brinquedos Aquáticos - página 26">
+    <img class="page-img" src="img/page-27.jpg" loading="lazy" alt="Brinquedos Aquáticos - página 27">
+  </section>
+
+  <section id="futebol-sabao" class="secao" data-pagina="28">
+    <p class="rotulo-secao">Futebol de Sabão</p>
+    <p class="subrotulo-secao">página 28</p>
+    <img class="page-img" src="img/page-28.jpg" loading="lazy" alt="Futebol de Sabão - página 28">
+  </section>
+
+  <section id="exclusivos" class="secao" data-pagina="29">
+    <p class="rotulo-secao">Brinquedos Exclusivos</p>
+    <p class="subrotulo-secao">página 29 · linha premium</p>
+    <img class="page-img" src="img/page-29.jpg" loading="lazy" alt="Brinquedos Exclusivos - página 29">
+  </section>
+
+  <section id="jogos-mesa" class="secao" data-pagina="30">
+    <p class="rotulo-secao">Jogos de Mesa</p>
+    <p class="subrotulo-secao">página 30 · montagem apenas em local interno</p>
+    <img class="page-img" src="img/page-30.jpg" loading="lazy" alt="Jogos de Mesa - página 30">
+  </section>
+
+  <section id="cama-elastica" class="secao" data-pagina="31">
+    <p class="rotulo-secao">Cama Elástica</p>
+    <p class="subrotulo-secao">páginas 31 a 32</p>
+    <img class="page-img" src="img/page-31.jpg" loading="lazy" alt="Cama Elástica - página 31">
+    <img class="page-img" src="img/page-32.jpg" loading="lazy" alt="Cama Elástica - página 32">
+  </section>
+
+  <section id="piscina-bolinhas" class="secao" data-pagina="33">
+    <p class="rotulo-secao">Piscina de Bolinhas</p>
+    <p class="subrotulo-secao">página 33</p>
+    <img class="page-img" src="img/page-33.jpg" loading="lazy" alt="Piscina de Bolinhas - página 33">
+  </section>
+
+  <section id="area-baby" class="secao" data-pagina="34">
+    <p class="rotulo-secao">Área Baby</p>
+    <p class="subrotulo-secao">página 34 · montagem apenas em local interno</p>
+    <img class="page-img" src="img/page-34.jpg" loading="lazy" alt="Área Baby - página 34">
+  </section>
+</main>
+
+<footer id="rodape">
+  Consulte a #EquipeLaranja e confira a melhor opção pra faixa etária do seu evento.<br>
+  <a href="https://wa.me/554184483455" target="_blank" rel="noopener">Fale com a Thamy Festas no WhatsApp</a>
+</footer>
+
+<a id="voltar-topo" href="#topo" aria-label="Voltar ao topo">↑</a>
+
 <script>
-// handle alias anchors by scrolling to the right image if the hash matches a data-target-page span
-window.addEventListener('load', function() {
-  var hash = window.location.hash.replace('#','');
-  if (!hash) return;
-  var el = document.getElementById(hash);
-  if (el && el.dataset && el.dataset.targetPage) {
-    var imgs = document.querySelectorAll('.page-img');
-    var idx = parseInt(el.dataset.targetPage, 10) - 1;
-    if (imgs[idx]) {
-      imgs[idx].scrollIntoView({behavior: 'instant', block: 'start'});
-      return;
-    }
+(function () {
+  var pills = Array.prototype.slice.call(document.querySelectorAll('#menu .pill'));
+  var secoes = Array.prototype.slice.call(document.querySelectorAll('.secao'));
+  var botaoTopo = document.getElementById('voltar-topo');
+
+  // realça o pill do grupo visível
+  if ('IntersectionObserver' in window) {
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        var id = entry.target.id;
+        pills.forEach(function (p) {
+          p.classList.toggle('ativo', p.dataset.anchor === id);
+        });
+      });
+    }, { rootMargin: '-120px 0px -70% 0px', threshold: 0 });
+    secoes.forEach(function (s) { obs.observe(s); });
   }
-  if (el) {
-    el.scrollIntoView({behavior: 'instant', block: 'start'});
-  }
-});
+
+  // botão flutuante de voltar ao topo
+  window.addEventListener('scroll', function () {
+    botaoTopo.classList.toggle('visivel', window.scrollY > 900);
+  }, { passive: true });
+})();
 </script>
+
 </body>
 </html>
