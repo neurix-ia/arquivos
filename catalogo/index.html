@@ -10,8 +10,6 @@
     --laranja-escuro: #e8590c;
     --creme: #fff8f0;
     --texto: #2b2320;
-    --pill-bg: #fff1e4;
-    --pill-border: #ffd9b8;
     --largura-max: 480px;
   }
   * { box-sizing: border-box; }
@@ -19,12 +17,10 @@
   body {
     margin: 0;
     padding: 0;
-    background: #e7e1d8; /* fundo neutro atrás da coluna, visível em telas largas */
+    background: #e7e1d8;
     color: var(--texto);
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   }
-
-  /* ---- coluna única: no celular ocupa a tela toda; no desktop vira um cartão centralizado ---- */
   #app {
     max-width: var(--largura-max);
     margin: 0 auto;
@@ -32,8 +28,6 @@
     min-height: 100vh;
     box-shadow: 0 0 40px rgba(0,0,0,.12);
   }
-
-  /* ---- topo fixo ---- */
   #topo {
     position: sticky;
     top: 0;
@@ -51,7 +45,6 @@
     text-align: center;
   }
   #topo h1 span { opacity: .85; font-weight: 500; font-size: 13px; display: block; margin-top: 2px; }
-
   #menu {
     display: flex;
     gap: 8px;
@@ -61,7 +54,6 @@
     scrollbar-width: none;
   }
   #menu::-webkit-scrollbar { display: none; }
-
   .pill {
     flex: 0 0 auto;
     background: rgba(255,255,255,.16);
@@ -76,34 +68,44 @@
     transition: background .15s ease, transform .1s ease;
   }
   .pill:active { transform: scale(.96); }
-  .pill.ativo {
+  .pill.ativo { background: #fff; color: var(--laranja-escuro); }
+  .pill.sub { background: rgba(255,255,255,.08); font-weight: 500; font-size: 12px; padding: 6px 12px; }
+  .separador-menu { flex: 0 0 auto; width: 1px; background: rgba(255,255,255,.3); margin: 4px 2px; }
+  .secao { scroll-margin-top: 96px; }
+  .page-img { display: block; width: 100%; height: auto; }
+
+  /* ---- botoes de reserva rapida por pagina ---- */
+  .produtos-pagina {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 12px 14px 22px;
+    background: var(--creme);
+  }
+  .produto-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
     background: #fff;
+    border: 1px solid var(--laranja);
     color: var(--laranja-escuro);
+    border-radius: 999px;
+    padding: 7px 12px;
+    font-size: 12.5px;
+    font-weight: 600;
+    text-decoration: none;
+    line-height: 1.2;
+    transition: background .15s ease, transform .1s ease;
   }
-  .pill.sub {
-    background: rgba(255,255,255,.08);
-    font-weight: 500;
-    font-size: 12px;
-    padding: 6px 12px;
-  }
-  .separador-menu {
-    flex: 0 0 auto;
-    width: 1px;
-    background: rgba(255,255,255,.3);
-    margin: 4px 2px;
-  }
-
-  /* ---- seções de página ---- */
-  .secao {
-    scroll-margin-top: 96px; /* compensa o header sticky */
-  }
-  .page-img {
-    display: block;
-    width: 100%;
-    height: auto;
+  .produto-btn:active { transform: scale(.96); background: #fff1e4; }
+  .produto-btn-icone { font-size: 11px; }
+  .produto-btn-pendente {
+    background: #f1efec;
+    border: 1px dashed #c9c2b8;
+    color: #8a7a6d;
+    cursor: default;
   }
 
-  /* ---- rodapé ---- */
   #rodape {
     background: #2b2320;
     color: #fff2e6;
@@ -113,7 +115,6 @@
     line-height: 1.7;
   }
   #rodape a { color: #ffb27a; text-decoration: none; font-weight: 600; }
-
   #voltar-topo {
     position: fixed;
     right: max(14px, calc(50vw - (var(--largura-max) / 2) + 14px));
@@ -141,7 +142,7 @@
 
 <div id="app">
 <header id="topo">
-  <h1>Catálogo Thamy Festas <span>toque num grupo abaixo pra ir direto na página 🎈</span></h1>
+  <h1>Catálogo Thamy Festas <span>toque num grupo pra ir direto na página, ou no brinquedo pra já consultar no WhatsApp 🎈</span></h1>
   <nav id="menu">
     <a class="pill" href="#mini-inflaveis" data-anchor="mini-inflaveis">Mini Infláveis</a>
     <a class="pill" href="#tobogas" data-anchor="tobogas">Tobogãs</a>
@@ -179,109 +180,390 @@
 
   <section id="mini-inflaveis" class="secao" data-pagina="3">
     <img class="page-img" src="img/page-03.jpg" loading="lazy" alt="Mini Infláveis - página 3">
+    <div class="produtos-pagina">
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Mini%20Aventura%20%28COD262%29" target="_blank" rel="noopener">Mini Aventura <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Mini%20Aventura%203%20em%201%20%28COD278%29" target="_blank" rel="noopener">Mini Aventura 3 em 1 <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Mini%20Corrida%20de%20Obst%C3%A1culos%20%28COD623%29" target="_blank" rel="noopener">Mini Corrida de Obstáculos <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Mini%20Kiddie%20Play%20%28COD306%29" target="_blank" rel="noopener">Mini Kiddie Play <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Mini%20Tobog%C3%A3%20%28COD254%29" target="_blank" rel="noopener">Mini Tobogã <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Mini%20Tobog%C3%A3%20c/%20Piscina%20de%20Bolinhas%20%28COD317%29" target="_blank" rel="noopener">Mini Tobogã c/ Piscina de Bolinhas <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Mini%20Tobopula%20%28COD755%29" target="_blank" rel="noopener">Mini Tobopula <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Piscina%20de%20Bolinhas%20Yupi%20%28COD264%29" target="_blank" rel="noopener">Piscina de Bolinhas Yupi <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Play%20Baby%20%28COD229%29" target="_blank" rel="noopener">Play Baby <span class="produto-btn-icone">💬</span></a>
+    </div>
   </section>
 
   <section id="tobogas" class="secao" data-pagina="4">
     <img class="page-img" src="img/page-04.jpg" loading="lazy" alt="Tobogãs - página 4">
+    <div class="produtos-pagina">
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Tobog%C3%A3%203%2C20%20%28COD750%29" target="_blank" rel="noopener">Tobogã 3,20 <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Tobog%C3%A3%203%2C60%20Thamy%20%28COD765%29" target="_blank" rel="noopener">Tobogã 3,60 Thamy <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Tobog%C3%A3%204%2C40%20%28COD520%29" target="_blank" rel="noopener">Tobogã 4,40 <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Tobog%C3%A3%20Casinha%20%28COD537%29" target="_blank" rel="noopener">Tobogã Casinha <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Tobog%C3%A3%20Casinha%20Super%20%28COD575%29" target="_blank" rel="noopener">Tobogã Casinha Super <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Tobog%C3%A3%20H%C3%ADper%20Duplo%20%28COD524%29" target="_blank" rel="noopener">Tobogã Híper Duplo <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Tobog%C3%A3%20Mega%20Descida%20Dupla%20%28COD686%29" target="_blank" rel="noopener">Tobogã Mega Descida Dupla <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Tobog%C3%A3%20Splash%20H%C3%ADper%20%28COD523%29" target="_blank" rel="noopener">Tobogã Splash Híper <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Tobog%C3%A3%20Thamy%20Festas%20%28COD192%29" target="_blank" rel="noopener">Tobogã Thamy Festas <span class="produto-btn-icone">💬</span></a>
+    </div>
     <img class="page-img" src="img/page-05.jpg" loading="lazy" alt="Tobogãs - página 5">
+    <div class="produtos-pagina">
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Tobog%C3%A3%20Mega%20%28COD52%29" target="_blank" rel="noopener">Tobogã Mega <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Tobog%C3%A3%20Mega%20Construtor%20%28COD681%29" target="_blank" rel="noopener">Tobogã Mega Construtor <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Tobog%C3%A3%20Queda%20Livre%20%28COD191%29" target="_blank" rel="noopener">Tobogã Queda Livre <span class="produto-btn-icone">💬</span></a>
+    </div>
   </section>
 
   <section id="castelos" class="secao" data-pagina="6">
     <img class="page-img" src="img/page-06.jpg" loading="lazy" alt="Castelos Infláveis - página 6">
+    <div class="produtos-pagina">
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Castelinho%20Baby%20%28COD674%29" target="_blank" rel="noopener">Castelinho Baby <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Castelo%20c/%20Escorregador%20Premium%20%28COD233%29" target="_blank" rel="noopener">Castelo c/ Escorregador Premium <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Castelo%20de%20Bolinhas%20%28COD253%29" target="_blank" rel="noopener">Castelo de Bolinhas <span class="produto-btn-icone">💬</span></a>
+    <span class="produto-btn produto-btn-pendente">Castelão Thamy Festas <span class="produto-btn-icone">🕐</span></span>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Disco%20Play%20%28COD169%29" target="_blank" rel="noopener">Disco Play <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Pula%20Pula%203%20Metros%20%28COD42%29" target="_blank" rel="noopener">Pula Pula 3 Metros <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Pula%20Pula%20Aventura%20%28COD39%29" target="_blank" rel="noopener">Pula Pula Aventura <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Pula%20Pula%20Aventura%20Thamy%20Festas%20%28COD199%29" target="_blank" rel="noopener">Pula Pula Aventura Thamy Festas <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Roda%20Gigante%20Infl%C3%A1vel%20%28COD197%29" target="_blank" rel="noopener">Roda Gigante Inflável <span class="produto-btn-icone">💬</span></a>
+    </div>
   </section>
 
   <section id="meninas" class="secao" data-pagina="7">
     <img class="page-img" src="img/page-07.jpg" loading="lazy" alt="Para as Meninas - página 7">
+    <div class="produtos-pagina">
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Castel%C3%A3o%20Rosa%20%28COD319%29" target="_blank" rel="noopener">Castelão Rosa <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Cubo%20M%C3%A1gico%203%20em%201%20%28COD559%29" target="_blank" rel="noopener">Cubo Mágico 3 em 1 <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Mini%20Aventura%20Cora%C3%A7%C3%A3o%20%28COD265%29" target="_blank" rel="noopener">Mini Aventura Coração <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Mini%20Kiddie%20Play%20Cora%C3%A7%C3%A3o%20%28COD306%29" target="_blank" rel="noopener">Mini Kiddie Play Coração <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Mini%20Tobog%C3%A3%20c/%20Piscina%20de%20Bolinhas%20Rosa%20%28COD317%29" target="_blank" rel="noopener">Mini Tobogã c/ Piscina de Bolinhas Rosa <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Multi%20Play%20Cora%C3%A7%C3%A3o%20%28COD538%29" target="_blank" rel="noopener">Multi Play Coração <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Pula%20Pula%20Aventura%20Rosa%20e%20Azul%20%28COD182%29" target="_blank" rel="noopener">Pula Pula Aventura Rosa e Azul <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Tobog%C3%A3%203%2C20%20Cora%C3%A7%C3%A3o%20%28COD750%29" target="_blank" rel="noopener">Tobogã 3,20 Coração <span class="produto-btn-icone">💬</span></a>
+    </div>
     <img class="page-img" src="img/page-08.jpg" loading="lazy" alt="Para as Meninas - página 8">
+    <div class="produtos-pagina">
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Castelo%20Peppa%20Pig%20%28COD16%29" target="_blank" rel="noopener">Castelo Peppa Pig <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Combo%203%20em%201%20Minnie%20%28COD535%29" target="_blank" rel="noopener">Combo 3 em 1 Minnie <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Combo%203%20em%201%20Unic%C3%B3rnio%20%28COD226%29" target="_blank" rel="noopener">Combo 3 em 1 Unicórnio <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Multi%20Play%20Frozen%20%28COD649%29" target="_blank" rel="noopener">Multi Play Frozen <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Multi%20Play%20Minnie%20%28COD561%29" target="_blank" rel="noopener">Multi Play Minnie <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Multi%20Play%20Unic%C3%B3rnio%20%28COD582%29" target="_blank" rel="noopener">Multi Play Unicórnio <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Piscina%20de%20Bolinhas%20Minnie%20%28COD248%29" target="_blank" rel="noopener">Piscina de Bolinhas Minnie <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Piscina%20de%20Bolinhas%20Rosa%20%28COD95%29" target="_blank" rel="noopener">Piscina de Bolinhas Rosa <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Tobog%C3%A3%20Casinha%20Cora%C3%A7%C3%A3o%20%28COD645%29" target="_blank" rel="noopener">Tobogã Casinha Coração <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Tobog%C3%A3%20Descida%20Dupla%20Cora%C3%A7%C3%A3o%20%28COD761%29" target="_blank" rel="noopener">Tobogã Descida Dupla Coração <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Tobog%C3%A3%20Frozen%20Grande%20%28COD293%29" target="_blank" rel="noopener">Tobogã Frozen Grande <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Tobog%C3%A3%20Uni-Duni-T%C3%AA%20Cora%C3%A7%C3%A3o%20%28COD252%29" target="_blank" rel="noopener">Tobogã Uni-Duni-Tê Coração <span class="produto-btn-icone">💬</span></a>
+    </div>
     <img class="page-img" src="img/page-09.jpg" loading="lazy" alt="Para as Meninas - página 9">
+    <div class="produtos-pagina">
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Cama%20El%C3%A1stica%20Coberta%20Rosa%20%28COD181%29" target="_blank" rel="noopener">Cama Elástica Coberta Rosa <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Cama%20El%C3%A1stica%20Rosa%20%28COD80%29" target="_blank" rel="noopener">Cama Elástica Rosa <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Castelo%20Encantado%20%28COD724%29" target="_blank" rel="noopener">Castelo Encantado <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Encanto%20da%20Sereia%20%28COD540%29" target="_blank" rel="noopener">Encanto da Sereia <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Jardim%20Encantado%20%28COD541%29" target="_blank" rel="noopener">Jardim Encantado <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Mega%20Play%20Stitch%20%28COD745%29" target="_blank" rel="noopener">Mega Play Stitch <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Multi%20Play%20Princesas%20%28COD753%29" target="_blank" rel="noopener">Multi Play Princesas <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Piscina%20de%20Bolinhas%20c/%20Escorregador%20Rosa%20%28COD95%29" target="_blank" rel="noopener">Piscina de Bolinhas c/ Escorregador Rosa <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Tobog%C3%A3%20Mega%20Jardim%20Encantado%20%28COD682%29" target="_blank" rel="noopener">Tobogã Mega Jardim Encantado <span class="produto-btn-icone">💬</span></a>
+    </div>
   </section>
 
   <section id="personalizado-mickey" class="secao" data-pagina="10">
-    <img class="page-img" src="img/page-10.jpg" loading="lazy" alt="Personalizados Mickey - página 10">
+    <img class="page-img" src="img/page-10.jpg" loading="lazy" alt="Personalizados · Mickey - página 10">
+    <div class="produtos-pagina">
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Cama%20El%C3%A1stica%20Mickey%20%28COD69%29" target="_blank" rel="noopener">Cama Elástica Mickey <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Castelo%20do%20Mickey%20%28COD14%29" target="_blank" rel="noopener">Castelo do Mickey <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Clube%20do%20Mickey%20%28COD286%29" target="_blank" rel="noopener">Clube do Mickey <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Combo%203%20em%201%20Mickey%20%28COD294%29" target="_blank" rel="noopener">Combo 3 em 1 Mickey <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Multi%20Play%20Mickey%20%28COD742%29" target="_blank" rel="noopener">Multi Play Mickey <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Piscina%20de%20Bolinhas%20Baby%20Mickey%20%28COD298%29" target="_blank" rel="noopener">Piscina de Bolinhas Baby Mickey <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Piscina%20de%20Bolinhas%20Mickey%20%28COD273%29" target="_blank" rel="noopener">Piscina de Bolinhas Mickey <span class="produto-btn-icone">💬</span></a>
+    </div>
   </section>
 
   <section id="personalizado-patrulha" class="secao" data-pagina="11">
-    <img class="page-img" src="img/page-11.jpg" loading="lazy" alt="Personalizados Patrulha Canina - página 11">
+    <img class="page-img" src="img/page-11.jpg" loading="lazy" alt="Personalizados · Patrulha Canina - página 11">
+    <div class="produtos-pagina">
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Bahia%20da%20Aventura%20%28COD550%29" target="_blank" rel="noopener">Bahia da Aventura <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Clube%20da%20Patrulha%20Canina%20%28COD277%29" target="_blank" rel="noopener">Clube da Patrulha Canina <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Combo%204%20em%201%20Patrulha%20Canina%20%28COD235%29" target="_blank" rel="noopener">Combo 4 em 1 Patrulha Canina <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Mini%20Aventura%20Patrulha%20Canina%20%28COD266%29" target="_blank" rel="noopener">Mini Aventura Patrulha Canina <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Multi%20Play%20Patrulha%20Canina%20%28COD526%29" target="_blank" rel="noopener">Multi Play Patrulha Canina <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Parquinho%20Patrulha%20Canina%20%28COD611%29" target="_blank" rel="noopener">Parquinho Patrulha Canina <span class="produto-btn-icone">💬</span></a>
+    <span class="produto-btn produto-btn-pendente">Piscina de Bolinhas Patrulha Canina <span class="produto-btn-icone">🕐</span></span>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Pula%20Pula%20Patrulha%20Canina%20%28COD184%29" target="_blank" rel="noopener">Pula Pula Patrulha Canina <span class="produto-btn-icone">💬</span></a>
+    </div>
   </section>
 
   <section id="personalizado-dino" class="secao" data-pagina="12">
-    <img class="page-img" src="img/page-12.jpg" loading="lazy" alt="Personalizados Dinossauros - página 12">
+    <img class="page-img" src="img/page-12.jpg" loading="lazy" alt="Personalizados · Dinossauros - página 12">
+    <div class="produtos-pagina">
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Circuito%20T-Rex%20%28COD676%29" target="_blank" rel="noopener">Circuito T-Rex <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Combo%203%20em%201%20Dino%20%28COD211%29" target="_blank" rel="noopener">Combo 3 em 1 Dino <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Dino%20Park%20%28COD616%29" target="_blank" rel="noopener">Dino Park <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Mini%20Kiddie%20Play%20T-Rex%20%28COD261%29" target="_blank" rel="noopener">Mini Kiddie Play T-Rex <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Monster%20Racer%20T-Rex%20%28COD679%29" target="_blank" rel="noopener">Monster Racer T-Rex <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Multi%20Play%20Dino%20Azul%20%28COD629%29" target="_blank" rel="noopener">Multi Play Dino Azul <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Parque%20dos%20Dinossauros%20%28COD32%29" target="_blank" rel="noopener">Parque dos Dinossauros <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Piscina%20de%20Bolinhas%20Dino%20%28COD301%29" target="_blank" rel="noopener">Piscina de Bolinhas Dino <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20T-Rex%20%28COD240%29" target="_blank" rel="noopener">T-Rex <span class="produto-btn-icone">💬</span></a>
+    </div>
   </section>
 
   <section id="personalizado-aranha" class="secao" data-pagina="13">
-    <img class="page-img" src="img/page-13.jpg" loading="lazy" alt="Personalizados Homem-Aranha - página 13">
+    <img class="page-img" src="img/page-13.jpg" loading="lazy" alt="Personalizados · Homem-Aranha - página 13">
+    <div class="produtos-pagina">
+    <span class="produto-btn produto-btn-pendente">Cama Elástica Homem Aranha <span class="produto-btn-icone">🕐</span></span>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Mini%20Kiddie%20Play%20Homem%20Aranha%20%28COD612%29" target="_blank" rel="noopener">Mini Kiddie Play Homem Aranha <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Multi%20Atividades%20Homem%20Aranha%20%28COD618%29" target="_blank" rel="noopener">Multi Atividades Homem Aranha <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Super%20Avengers%20%28COD723%29" target="_blank" rel="noopener">Super Avengers <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Tobog%C3%A3%20Homem%20Aranha%20%28COD195%29" target="_blank" rel="noopener">Tobogã Homem Aranha <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Tobog%C3%A3%20Spider%20City%20%28COD693%29" target="_blank" rel="noopener">Tobogã Spider City <span class="produto-btn-icone">💬</span></a>
+    </div>
   </section>
 
   <section id="personalizado-safari" class="secao" data-pagina="14">
-    <img class="page-img" src="img/page-14.jpg" loading="lazy" alt="Personalizados Safari - página 14">
+    <img class="page-img" src="img/page-14.jpg" loading="lazy" alt="Personalizados · Safari - página 14">
+    <div class="produtos-pagina">
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Adventure%20Safari%20%28COD284%29" target="_blank" rel="noopener">Adventure Safari <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Aventura%20na%20%C3%81frica%20%28COD689%29" target="_blank" rel="noopener">Aventura na África <span class="produto-btn-icone">💬</span></a>
+    <span class="produto-btn produto-btn-pendente">Capi-Park 3 em 1 <span class="produto-btn-icone">🕐</span></span>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Combo%203%20em%201%20Rei%20Le%C3%A3o%20%28COD227%29" target="_blank" rel="noopener">Combo 3 em 1 Rei Leão <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Parquinho%20Safari%20%28COD525%29" target="_blank" rel="noopener">Parquinho Safari <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Piscina%20de%20Bolinhas%203%20em%201%20Le%C3%A3ozinho%20%28COD236%29" target="_blank" rel="noopener">Piscina de Bolinhas 3 em 1 Leãozinho <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Piscina%20de%20Bolinhas%20Le%C3%A3ozinho%20%28COD236%29" target="_blank" rel="noopener">Piscina de Bolinhas Leãozinho <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Pula%20Pula%20Le%C3%A3ozinho%20%28COD295%29" target="_blank" rel="noopener">Pula Pula Leãozinho <span class="produto-btn-icone">💬</span></a>
+    </div>
   </section>
 
   <section id="personalizado-pirata" class="secao" data-pagina="15">
-    <img class="page-img" src="img/page-15.jpg" loading="lazy" alt="Personalizados Piratas e Mar - página 15">
+    <img class="page-img" src="img/page-15.jpg" loading="lazy" alt="Personalizados · Piratas & Mar - página 15">
+    <div class="produtos-pagina">
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Aventura%20Pirata%20%28COD534%29" target="_blank" rel="noopener">Aventura Pirata <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Crocodilo%20Play%20%28COD189%29" target="_blank" rel="noopener">Crocodilo Play <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Kiddie%20Play%20Jacar%C3%A9%20%28COD194%29" target="_blank" rel="noopener">Kiddie Play Jacaré <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Multi%20Play%20Festa%20no%20Mar%20%28COD622%29" target="_blank" rel="noopener">Multi Play Festa no Mar <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Piscina%20de%20Bolinhas%20c/%20Escorregador%20Jacar%C3%A9%20%28COD38%29" target="_blank" rel="noopener">Piscina de Bolinhas c/ Escorregador Jacaré <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Tobog%C3%A3%20Barco%20Jolly%20Roger%20%28COD292%29" target="_blank" rel="noopener">Tobogã Barco Jolly Roger <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Tobog%C3%A3%20Barco%20Pirata%20%28COD45%29" target="_blank" rel="noopener">Tobogã Barco Pirata <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Tobog%C3%A3%20Jacar%C3%A9%20Pequeno%20%28COD54%29" target="_blank" rel="noopener">Tobogã Jacaré Pequeno <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Toboshark%20%28COD619%29" target="_blank" rel="noopener">Toboshark <span class="produto-btn-icone">💬</span></a>
+    </div>
   </section>
 
   <section id="personalizado-carros" class="secao" data-pagina="16">
-    <img class="page-img" src="img/page-16.jpg" loading="lazy" alt="Personalizados Carros - página 16">
+    <img class="page-img" src="img/page-16.jpg" loading="lazy" alt="Personalizados · Carros - página 16">
+    <div class="produtos-pagina">
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Combo%204%20em%201%20Carros%20%28COD193%29" target="_blank" rel="noopener">Combo 4 em 1 Carros <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Piscina%20de%20Bolinhas%20Carros%20%28COD95%29" target="_blank" rel="noopener">Piscina de Bolinhas Carros <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Pula%20Pula%20Aventura%20Carros%20%28COD39%29" target="_blank" rel="noopener">Pula Pula Aventura Carros <span class="produto-btn-icone">💬</span></a>
+    </div>
   </section>
 
   <section id="personalizado-batman" class="secao" data-pagina="17">
-    <img class="page-img" src="img/page-17.jpg" loading="lazy" alt="Personalizados Batman - página 17">
+    <img class="page-img" src="img/page-17.jpg" loading="lazy" alt="Personalizados · Batman - página 17">
+    <div class="produtos-pagina">
+    <span class="produto-btn produto-btn-pendente">Bat Caverna <span class="produto-btn-icone">🕐</span></span>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Bat%20Play%20%28COD4%29" target="_blank" rel="noopener">Bat Play <span class="produto-btn-icone">💬</span></a>
+    <span class="produto-btn produto-btn-pendente">Batman <span class="produto-btn-icone">🕐</span></span>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Cama%20El%C3%A1stica%20do%20Batman%20%28COD69%29" target="_blank" rel="noopener">Cama Elástica do Batman <span class="produto-btn-icone">💬</span></a>
+    </div>
   </section>
 
   <section id="personalizado-circo" class="secao" data-pagina="18">
-    <img class="page-img" src="img/page-18.jpg" loading="lazy" alt="Personalizados Circo e Toy Story - página 18">
+    <img class="page-img" src="img/page-18.jpg" loading="lazy" alt="Personalizados · Circo & Toy Story - página 18">
+    <div class="produtos-pagina">
+    <span class="produto-btn produto-btn-pendente">Boca do Palhaço <span class="produto-btn-icone">🕐</span></span>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Circuito%20Circo%20%28COD678%29" target="_blank" rel="noopener">Circuito Circo <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Combo%203%20em%201%20Palhacinho%20%28COD18%29" target="_blank" rel="noopener">Combo 3 em 1 Palhacinho <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Multi%20Play%20Toy%20Story%20%28COD562%29" target="_blank" rel="noopener">Multi Play Toy Story <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Tobospace%20%28COD684%29" target="_blank" rel="noopener">Tobospace <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Tot%C3%B3bog%C3%A3%20%28COD188%29" target="_blank" rel="noopener">Totóbogã <span class="produto-btn-icone">💬</span></a>
+    </div>
   </section>
 
   <section id="personalizado-fazenda" class="secao" data-pagina="19">
-    <img class="page-img" src="img/page-19.jpg" loading="lazy" alt="Personalizados Fazendinha e Tigre - página 19">
+    <img class="page-img" src="img/page-19.jpg" loading="lazy" alt="Personalizados · Fazendinha & Tigre - página 19">
+    <div class="produtos-pagina">
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Combo%203%20em%201%20Tigre%20%28COD539%29" target="_blank" rel="noopener">Combo 3 em 1 Tigre <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Combo%203%20em%201%20Vaquinha%20%28COD321%29" target="_blank" rel="noopener">Combo 3 em 1 Vaquinha <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Mega%20Play%20Velho%20Oeste%20%28COD687%29" target="_blank" rel="noopener">Mega Play Velho Oeste <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Parquinho%20Fazendinha%20%28COD551%29" target="_blank" rel="noopener">Parquinho Fazendinha <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Piscina%20de%20Bolinhas%20Yupi%20Tigrinho%20%28COD297%29" target="_blank" rel="noopener">Piscina de Bolinhas Yupi Tigrinho <span class="produto-btn-icone">💬</span></a>
+    </div>
   </section>
 
   <section id="multi-atividades" class="secao" data-pagina="20">
     <img class="page-img" src="img/page-20.jpg" loading="lazy" alt="Multi Atividades - página 20">
+    <div class="produtos-pagina">
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Casa%20do%20Picolino%20%28COD7%29" target="_blank" rel="noopener">Casa do Picolino <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Castelinho%203%20em%201%20%28COD198%29" target="_blank" rel="noopener">Castelinho 3 em 1 <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Kiddie%20Play%20Aventura%20%28COD316%29" target="_blank" rel="noopener">Kiddie Play Aventura <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Kiddie%20Play%20Castelinho%20%28COD25%29" target="_blank" rel="noopener">Kiddie Play Castelinho <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Kiddie%20Play%20Lego%20%28COD744%29" target="_blank" rel="noopener">Kiddie Play Lego <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Kiddie%20Play%20Multi%20Atividades%20%28COD620%29" target="_blank" rel="noopener">Kiddie Play Multi Atividades <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Kiddie%20Play%20Parquinho%20%28COD307%29" target="_blank" rel="noopener">Kiddie Play Parquinho <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Kiddie%20Play%20Thamy%20Festas%20%28COD221%29" target="_blank" rel="noopener">Kiddie Play Thamy Festas <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Multi%20Play%20Colorex%20%28COD538%29" target="_blank" rel="noopener">Multi Play Colorex <span class="produto-btn-icone">💬</span></a>
+    </div>
   </section>
 
   <section id="circuito" class="secao" data-pagina="21">
     <img class="page-img" src="img/page-21.jpg" loading="lazy" alt="Circuito Inflável - página 21">
+    <div class="produtos-pagina">
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Big%20Racer%20%28COD220%29" target="_blank" rel="noopener">Big Racer <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Circuito%20Baby%20Infl%C3%A1vel%20%28COD212%29" target="_blank" rel="noopener">Circuito Baby Inflável <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Circuito%20Infl%C3%A1vel%20%28COD677%29" target="_blank" rel="noopener">Circuito Inflável <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Corrida%20de%20Obst%C3%A1culos%20%28COD650%29" target="_blank" rel="noopener">Corrida de Obstáculos <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Corrida%20e%20Obst%C3%A1culos%20Standart%20%28COD759%29" target="_blank" rel="noopener">Corrida e Obstáculos Standart <span class="produto-btn-icone">💬</span></a>
+    <span class="produto-btn produto-btn-pendente">Hiper Circuito <span class="produto-btn-icone">🕐</span></span>
+    </div>
   </section>
 
   <section id="mecanicos" class="secao" data-pagina="22">
     <img class="page-img" src="img/page-22.jpg" loading="lazy" alt="Brinquedos Mecânicos - página 22">
+    <div class="produtos-pagina">
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Baby%20Bull%20%28COD489%29" target="_blank" rel="noopener">Baby Bull <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Touro%20Mec%C3%A2nico%20Bandido%20%28COD516%29" target="_blank" rel="noopener">Touro Mecânico Bandido <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Touro%20Mec%C3%A2nico%20Imperador%20%28COD757%29" target="_blank" rel="noopener">Touro Mecânico Imperador <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Touro%20Mec%C3%A2nico%20Malhado%20%28COD580%29" target="_blank" rel="noopener">Touro Mecânico Malhado <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Touro%20Mec%C3%A2nico%20Max%20%28COD472%29" target="_blank" rel="noopener">Touro Mecânico Max <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Touro%20Mec%C3%A2nico%20Tempestade%20%28COD172%29" target="_blank" rel="noopener">Touro Mecânico Tempestade <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Touro%20Mec%C3%A2nico%20Tornado%20%28COD571%29" target="_blank" rel="noopener">Touro Mecânico Tornado <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Touro%20Mec%C3%A2nico%20Trov%C3%A3o%20%28COD322%29" target="_blank" rel="noopener">Touro Mecânico Trovão <span class="produto-btn-icone">💬</span></a>
+    </div>
     <img class="page-img" src="img/page-23.jpg" loading="lazy" alt="Brinquedos Mecânicos - página 23">
+    <div class="produtos-pagina">
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Capivara%20Mec%C3%A2nica%20%28COD692%29" target="_blank" rel="noopener">Capivara Mecânica <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Giro%20Radical%20%28COD22%29" target="_blank" rel="noopener">Giro Radical <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Giro%20Radical%20Standart%20%28COD531%29" target="_blank" rel="noopener">Giro Radical Standart <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Surf%20Machine%20%28COD533%29" target="_blank" rel="noopener">Surf Machine <span class="produto-btn-icone">💬</span></a>
+    </div>
   </section>
 
   <section id="esportivos" class="secao" data-pagina="24">
     <img class="page-img" src="img/page-24.jpg" loading="lazy" alt="Brinquedos Esportivos - página 24">
+    <div class="produtos-pagina">
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Arco%20e%20Play%20%28COD4%29" target="_blank" rel="noopener">Arco e Play <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Chute%20a%20Gol%20Aberto%20%28COD200%29" target="_blank" rel="noopener">Chute a Gol Aberto <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Chute%20a%20Gol%20Fechado%20%28COD17%29" target="_blank" rel="noopener">Chute a Gol Fechado <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Chute%20ao%20Alvo%20%28COD685%29" target="_blank" rel="noopener">Chute ao Alvo <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Corrida%20Maluca%20%28COD19%29" target="_blank" rel="noopener">Corrida Maluca <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Guerra%20de%20Cotonetes%20%28COD617%29" target="_blank" rel="noopener">Guerra de Cotonetes <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Guerra%20de%20Cotonetes%20Infantil%20%28COD617%29" target="_blank" rel="noopener">Guerra de Cotonetes Infantil <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Jogo%20de%20Argolas%20%28COD285%29" target="_blank" rel="noopener">Jogo de Argolas <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Multi%20Target%20%28COD28%29" target="_blank" rel="noopener">Multi Target <span class="produto-btn-icone">💬</span></a>
+    </div>
     <img class="page-img" src="img/page-25.jpg" loading="lazy" alt="Brinquedos Esportivos - página 25">
+    <div class="produtos-pagina">
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Air%20Soccer%20%28COD3%29" target="_blank" rel="noopener">Air Soccer <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Alpinismo%20%28COD558%29" target="_blank" rel="noopener">Alpinismo <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Basquete%20Infl%C3%A1vel%20%28COD583%29" target="_blank" rel="noopener">Basquete Inflável <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Dual%20Radical%20%28COD536%29" target="_blank" rel="noopener">Dual Radical <span class="produto-btn-icone">💬</span></a>
+    </div>
   </section>
 
   <section id="aquaticos" class="secao" data-pagina="26">
     <img class="page-img" src="img/page-26.jpg" loading="lazy" alt="Brinquedos Aquáticos - página 26">
+    <div class="produtos-pagina">
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Mini%20Slide%20%28COD288%29" target="_blank" rel="noopener">Mini Slide <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Radical%20Slide%20%28COD239%29" target="_blank" rel="noopener">Radical Slide <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Radical%20Slide%20Standart%20%28COD675%29" target="_blank" rel="noopener">Radical Slide Standart <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Radical%20Splash%202%20em%201%20%28COD247%29" target="_blank" rel="noopener">Radical Splash 2 em 1 <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Tobog%C3%A3%203%2C20%20%2B%20Mini%20Slide%20%28COD288%29" target="_blank" rel="noopener">Tobogã 3,20 + Mini Slide <span class="produto-btn-icone">💬</span></a>
+    <span class="produto-btn produto-btn-pendente">Tobogã 3,20 + Piscina <span class="produto-btn-icone">🕐</span></span>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Tobog%C3%A3%20Casinha%20Splash%20%28COD537%29" target="_blank" rel="noopener">Tobogã Casinha Splash <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Tobog%C3%A3%20Casinha%20Splash%20%2B%20Mini%20Slide%20%28COD537%29" target="_blank" rel="noopener">Tobogã Casinha Splash + Mini Slide <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Tobog%C3%A3%20Splash%203%2C20%20%28COD283%29" target="_blank" rel="noopener">Tobogã Splash 3,20 <span class="produto-btn-icone">💬</span></a>
+    </div>
     <img class="page-img" src="img/page-27.jpg" loading="lazy" alt="Brinquedos Aquáticos - página 27">
+    <div class="produtos-pagina">
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Canh%C3%A3o%20de%20Espuma%20%28COD296%29" target="_blank" rel="noopener">Canhão de Espuma <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Tobog%C3%A3%20Mega%20T-Rex%20%28COD680%29" target="_blank" rel="noopener">Tobogã Mega T-Rex <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Tobog%C3%A3%20Octa%20Play%20%28COD673%29" target="_blank" rel="noopener">Tobogã Octa Play <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Watter%20Ball%20%28COD473%29" target="_blank" rel="noopener">Watter Ball <span class="produto-btn-icone">💬</span></a>
+    </div>
   </section>
 
   <section id="futebol-sabao" class="secao" data-pagina="28">
     <img class="page-img" src="img/page-28.jpg" loading="lazy" alt="Futebol de Sabão - página 28">
+    <div class="produtos-pagina">
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Futebol%20de%20Sab%C3%A3o%203x6%20%28COD21%29" target="_blank" rel="noopener">Futebol de Sabão 3x6 <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Futebol%20de%20Sab%C3%A3o%204x8%20%28COD552%29" target="_blank" rel="noopener">Futebol de Sabão 4x8 <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Futebol%20de%20Sab%C3%A3o%20Champions%20%28COD743%29" target="_blank" rel="noopener">Futebol de Sabão Champions <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Futebol%20de%20Sab%C3%A3o%20Standart%202%20em%201%20%28COD234%29" target="_blank" rel="noopener">Futebol de Sabão Standart 2 em 1 <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Futebol%20de%20Sab%C3%A3o%20Super%20%28COD21%29" target="_blank" rel="noopener">Futebol de Sabão Super <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Quadra%20Poliesportiva%20%28COD166%29" target="_blank" rel="noopener">Quadra Poliesportiva <span class="produto-btn-icone">💬</span></a>
+    </div>
   </section>
 
   <section id="exclusivos" class="secao" data-pagina="29">
     <img class="page-img" src="img/page-29.jpg" loading="lazy" alt="Brinquedos Exclusivos - página 29">
+    <div class="produtos-pagina">
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Castelo%20Branco%20%28COD621%29" target="_blank" rel="noopener">Castelo Branco <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Castelo%20Premium%203%20em%201%20%28COD233%29" target="_blank" rel="noopener">Castelo Premium 3 em 1 <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Piscina%20de%20Bolinhas%20Branca%20%28COD93%29" target="_blank" rel="noopener">Piscina de Bolinhas Branca <span class="produto-btn-icone">💬</span></a>
+    </div>
   </section>
 
   <section id="jogos-mesa" class="secao" data-pagina="30">
     <img class="page-img" src="img/page-30.jpg" loading="lazy" alt="Jogos de Mesa - página 30">
+    <div class="produtos-pagina">
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Aero%20Hockey%20%28COD65%29" target="_blank" rel="noopener">Aero Hockey <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Fliperama%20%28COD647%29" target="_blank" rel="noopener">Fliperama <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Fliperama%20Inclusivo%20%28COD586%29" target="_blank" rel="noopener">Fliperama Inclusivo <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Fliperama%20Subway%20Surfers%20%28COD648%29" target="_blank" rel="noopener">Fliperama Subway Surfers <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Karaok%C3%AA%20%28COD721%29" target="_blank" rel="noopener">Karaokê <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Pebolim%20%28COD710%29" target="_blank" rel="noopener">Pebolim <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Ping%20Pong%20Infantil%20%28COD576%29" target="_blank" rel="noopener">Ping Pong Infantil <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Simulador%20Car%20Kids%20%28COD578%29" target="_blank" rel="noopener">Simulador Car Kids <span class="produto-btn-icone">💬</span></a>
+    </div>
   </section>
 
   <section id="cama-elastica" class="secao" data-pagina="31">
     <img class="page-img" src="img/page-31.jpg" loading="lazy" alt="Cama Elástica - página 31">
+    <div class="produtos-pagina">
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Cama%20El%C3%A1stica%201%2C40%20%28COD259%29" target="_blank" rel="noopener">Cama Elástica 1,40 <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Cama%20El%C3%A1stica%201%2C90%20%28COD69%29" target="_blank" rel="noopener">Cama Elástica 1,90 <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Cama%20El%C3%A1stica%202%2C10%20%28COD255%29" target="_blank" rel="noopener">Cama Elástica 2,10 <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Cama%20El%C3%A1stica%202%2C20%20%28COD71%29" target="_blank" rel="noopener">Cama Elástica 2,20 <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Cama%20El%C3%A1stica%202%2C40%20%28COD72%29" target="_blank" rel="noopener">Cama Elástica 2,40 <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Cama%20El%C3%A1stica%202%2C80%20%28COD244%29" target="_blank" rel="noopener">Cama Elástica 2,80 <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Cama%20El%C3%A1stica%203%2C30%20%28COD75%29" target="_blank" rel="noopener">Cama Elástica 3,30 <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Cama%20El%C3%A1stica%203%2C80%20%28COD76%29" target="_blank" rel="noopener">Cama Elástica 3,80 <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Cama%20El%C3%A1stica%204%2C40%20%28COD78%29" target="_blank" rel="noopener">Cama Elástica 4,40 <span class="produto-btn-icone">💬</span></a>
+    </div>
     <img class="page-img" src="img/page-32.jpg" loading="lazy" alt="Cama Elástica - página 32">
+    <div class="produtos-pagina">
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Cama%20El%C3%A1stica%20Coberta%20Grande%20%28COD82%29" target="_blank" rel="noopener">Cama Elástica Coberta Grande <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Cama%20El%C3%A1stica%20Coberta%20M%C3%A9dia%20%28COD81%29" target="_blank" rel="noopener">Cama Elástica Coberta Média <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Cama%20El%C3%A1stica%20Foguetinho%20%28COD263%29" target="_blank" rel="noopener">Cama Elástica Foguetinho <span class="produto-btn-icone">💬</span></a>
+    </div>
   </section>
 
   <section id="piscina-bolinhas" class="secao" data-pagina="33">
     <img class="page-img" src="img/page-33.jpg" loading="lazy" alt="Piscina de Bolinhas - página 33">
+    <div class="produtos-pagina">
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Piscina%20de%20Bolinhas%20Cachorrinho%20%28COD33%29" target="_blank" rel="noopener">Piscina de Bolinhas Cachorrinho <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Piscina%20de%20Bolinhas%20Carinhas%20%28COD33%29" target="_blank" rel="noopener">Piscina de Bolinhas Carinhas <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Piscina%20de%20Bolinhas%20Color%C3%AA%20%28COD549%29" target="_blank" rel="noopener">Piscina de Bolinhas Colorê <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Piscina%20de%20Bolinhas%20Iglu%20%28COD89%29" target="_blank" rel="noopener">Piscina de Bolinhas Iglu <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Piscina%20de%20Bolinhas%20Panda%20%28COD249%29" target="_blank" rel="noopener">Piscina de Bolinhas Panda <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Piscina%20de%20Bolinhas%20Thamy%20Festas%20%28COD253%29" target="_blank" rel="noopener">Piscina de Bolinhas Thamy Festas <span class="produto-btn-icone">💬</span></a>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20Piscina%20de%20Bolinhas%20c/%20Escorregador%20%28COD33%29" target="_blank" rel="noopener">Piscina de Bolinhas c/ Escorregador <span class="produto-btn-icone">💬</span></a>
+    </div>
   </section>
 
   <section id="area-baby" class="secao" data-pagina="34">
     <img class="page-img" src="img/page-34.jpg" loading="lazy" alt="Área Baby - página 34">
+    <div class="produtos-pagina">
+    <span class="produto-btn produto-btn-pendente">Mini Área Baby <span class="produto-btn-icone">🕐</span></span>
+    <span class="produto-btn produto-btn-pendente">Mini Área Baby Rosa <span class="produto-btn-icone">🕐</span></span>
+    <span class="produto-btn produto-btn-pendente">Piscina de Bolinhas com Área Baby <span class="produto-btn-icone">🕐</span></span>
+    <a class="produto-btn" href="https://wa.me/554184483455?text=Ol%C3%A1%21%20Quero%20saber%20disponibilidade%20e%20pre%C3%A7o%20deste%20brinquedo%3A%20%C3%81rea%20Baby%20Infl%C3%A1vel%20%28COD5%29" target="_blank" rel="noopener">Área Baby Inflável <span class="produto-btn-icone">💬</span></a>
+    </div>
   </section>
 </main>
 
@@ -298,22 +580,16 @@
   var pills = Array.prototype.slice.call(document.querySelectorAll('#menu .pill'));
   var secoes = Array.prototype.slice.call(document.querySelectorAll('.secao'));
   var botaoTopo = document.getElementById('voltar-topo');
-
-  // realça o pill do grupo visível
   if ('IntersectionObserver' in window) {
     var obs = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (!entry.isIntersecting) return;
         var id = entry.target.id;
-        pills.forEach(function (p) {
-          p.classList.toggle('ativo', p.dataset.anchor === id);
-        });
+        pills.forEach(function (p) { p.classList.toggle('ativo', p.dataset.anchor === id); });
       });
     }, { rootMargin: '-120px 0px -70% 0px', threshold: 0 });
     secoes.forEach(function (s) { obs.observe(s); });
   }
-
-  // botão flutuante de voltar ao topo
   window.addEventListener('scroll', function () {
     botaoTopo.classList.toggle('visivel', window.scrollY > 900);
   }, { passive: true });
