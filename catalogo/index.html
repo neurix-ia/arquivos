@@ -75,6 +75,8 @@
   .page-img { display: block; width: 100%; height: auto; }
 
   /* ---- areas clicaveis invisiveis em cima da foto de cada brinquedo ---- */
+  /* DESATIVADO: pointer-events:none neutraliza o clique em todas as areas sem
+     precisar mexer nos 204 elementos individuais. Pra reativar, tirar essa linha. */
   .pagina-wrap { position: relative; }
   .hotspot {
     position: absolute;
@@ -82,6 +84,8 @@
     background: rgba(255,255,255,0);
     -webkit-tap-highlight-color: rgba(255,106,26,.25);
     transition: background .15s ease;
+    pointer-events: none;
+    cursor: default;
   }
   .hotspot:active { background: rgba(255,106,26,.18); }
   @media (hover: hover) {
