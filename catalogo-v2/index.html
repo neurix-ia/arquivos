@@ -569,5 +569,18 @@
 })();
 </script>
 
+<script>
+// Redireciona os links do catalogo para o numero de WhatsApp que atendeu a conversa
+// (a Thamy Festas tem mais de um numero ligado ao mesmo agente). O link chega com
+// ?tel=<numero>; sem isso, mantem o numero padrao ja gravado em cada botao.
+(function () {
+  var tel = new URLSearchParams(window.location.search).get('tel');
+  if (!tel || !/^\d{10,15}$/.test(tel)) return;
+  document.querySelectorAll('a.hotspot[href]').forEach(function (a) {
+    a.href = a.href.replace(/(wa\.me\/)\d+/, '$1' + tel);
+  });
+})();
+</script>
+
 </body>
 </html>
