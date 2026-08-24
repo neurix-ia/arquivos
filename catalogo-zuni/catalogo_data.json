@@ -2,7 +2,7 @@
  {
   "formato": "talher",
   "nome": "Talher",
-  "titulo": "Jogo Americano c/ Bolso pra Talher",
+  "titulo": "Jogo americano c/ costura espaço para talher",
   "itens": [
    {
     "slug": "talher_caramelo_vinho",
@@ -960,29 +960,6 @@
     "link": "https://produto.mercadolivre.com.br/MLB-2625748334-deskpad-dupla-face-couro-sintetico-1-unidade-varias-cores-_JM?attributes=COLOR_SECONDARY_COLOR%3AUHJldG8gZSBtYXJyb20gY2Fmw6k%3D&quantity=1&picker=true",
     "mlbs": [
      "MLB2625748334"
-    ]
-   }
-  ]
- },
- {
-  "formato": "unitario",
-  "nome": "Unitário",
-  "titulo": "Jogo Americano Avulso (1 unidade)",
-  "itens": [
-   {
-    "slug": "unitario_sortidas",
-    "cor_display": "Cores Sortidas",
-    "cor_frente": "sortidas",
-    "cor_verso": "",
-    "qtds": [
-     1
-    ],
-    "images": [
-     "img/unitario_sortidas_01.jpg"
-    ],
-    "link": "https://www.mercadolivre.com.br/jogo-americano-em-couro-sintetico-1-unidade/up/MLBU4131260073?pdp_filters=item_id%3AMLB7015758784",
-    "mlbs": [
-     "MLB7015758784"
     ]
    }
   ]
