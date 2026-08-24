@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Catálogo Zuni Couros</title>
+<style>
+  :root {
+    --marrom: #7a4a2b;
+    --marrom-escuro: #52301a;
+    --vinho: #6e2430;
+    --creme: #faf4ea;
+    --texto: #2b2320;
+    --texto-suave: #6b5c4e;
+    --borda: #e4d7c4;
+    --whatsapp: #25d366;
+    --largura-max: 520px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    padding: 0;
+    background: #ddd0bd;
+    color: var(--texto);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+  #app {
+    max-width: var(--largura-max);
+    margin: 0 auto;
+    background: var(--creme);
+    min-height: 100vh;
+    box-shadow: 0 0 40px rgba(0,0,0,.15);
+  }
+
+  /* ---------- topo ---------- */
+  #topo {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    background: linear-gradient(135deg, var(--marrom), var(--marrom-escuro));
+    box-shadow: 0 2px 10px rgba(0,0,0,.2);
+  }
+  #topo h1 {
+    margin: 0;
+    padding: 14px 16px 8px;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: .2px;
+    text-align: center;
+  }
+  #topo h1 span { opacity: .85; font-weight: 500; font-size: 12.5px; display: block; margin-top: 4px; }
+  #menu {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 0 12px 12px;
+    scrollbar-width: none;
+  }
+  #menu::-webkit-scrollbar { display: none; }
+  .pill {
+    flex: 0 0 auto;
+    background: rgba(255,255,255,.14);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,.32);
+    border-radius: 999px;
+    padding: 7px 15px;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+    text-decoration: none;
+    transition: background .15s ease, transform .1s ease;
+    cursor: pointer;
+  }
+  .pill:active { transform: scale(.96); }
+  .pill.ativo { background: #fff; color: var(--marrom-escuro); }
+
+  /* ---------- secoes / grid ---------- */
+  .secao { scroll-margin-top: 108px; padding: 18px 14px 6px; }
+  .secao-titulo {
+    margin: 0 0 3px;
+    font-size: 17px;
+    font-weight: 800;
+    color: var(--marrom-escuro);
+  }
+  .secao-subtitulo {
+    margin: 0 0 14px;
+    font-size: 12.5px;
+    color: var(--texto-suave);
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding-bottom: 8px;
+  }
+  .card {
+    background: #fff;
+    border: 1px solid var(--borda);
+    border-radius: 14px;
+    overflow: hidden;
+    cursor: pointer;
+    text-align: left;
+    padding: 0;
+    box-shadow: 0 2px 6px rgba(43,35,32,.08);
+    transition: transform .12s ease, box-shadow .12s ease;
+  }
+  .card:active { transform: scale(.97); }
+  .card-foto-wrap { position: relative; width: 100%; aspect-ratio: 4 / 5; background: #f1e9dc; overflow: hidden; }
+  .card-foto-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .card-badge-fotos {
+    position: absolute;
+    right: 6px;
+    top: 6px;
+    background: rgba(43,35,32,.62);
+    color: #fff;
+    font-size: 10.5px;
+    font-weight: 700;
+    padding: 3px 7px;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  }
+  .card-info { padding: 8px 10px 10px; }
+  .card-cor {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--texto);
+    line-height: 1.25;
+    margin: 0 0 5px;
+  }
+  .card-tamanhos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .tam-badge {
+    background: var(--creme);
+    border: 1px solid var(--borda);
+    color: var(--texto-suave);
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 6px;
+  }
+  .card-sem-tamanho { font-size: 10.5px; color: var(--texto-suave); }
+
+  /* ---------- lightbox ---------- */
+  #lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: rgba(20,14,10,.94);
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+  #lightbox.aberto { display: flex; }
+  .lb-fechar {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.12);
+    color: #fff;
+    border: none;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 5;
+  }
+  .lb-carrossel {
+    width: 100%;
+    max-width: var(--largura-max);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    touch-action: pan-y;
+  }
+  .lb-carrossel img {
+    width: 100%;
+    max-height: 62vh;
+    object-fit: contain;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+  .lb-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.14);
+    color: #fff;
+    border: none;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  .lb-prev { left: 6px; }
+  .lb-next { right: 6px; }
+  .lb-dots { display: flex; gap: 6px; justify-content: center; padding: 12px 0 4px; }
+  .lb-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,.32); }
+  .lb-dot.ativo { background: #fff; }
+  .lb-info {
+    width: 100%;
+    max-width: var(--largura-max);
+    padding: 6px 20px 26px;
+    text-align: center;
+  }
+  .lb-cor { color: #fff; font-size: 16px; font-weight: 800; margin: 0 0 4px; }
+  .lb-formato { color: rgba(255,255,255,.65); font-size: 12.5px; margin: 0 0 10px; }
+  .lb-tamanhos { color: rgba(255,255,255,.85); font-size: 12px; margin: 0 0 18px; }
+  .lb-whats {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    background: var(--whatsapp);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 15px;
+    padding: 13px 18px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,.3);
+  }
+  .lb-whats svg { width: 20px; height: 20px; flex: 0 0 auto; }
+
+  /* ---------- rodape ---------- */
+  #rodape {
+    background: var(--marrom-escuro);
+    color: #f3e6d8;
+    text-align: center;
+    padding: 26px 16px 34px;
+    font-size: 12.5px;
+    line-height: 1.7;
+  }
+  #rodape a { color: #f0c9a0; text-decoration: none; font-weight: 700; }
+  #voltar-topo {
+    position: fixed;
+    right: max(14px, calc(50vw - (var(--largura-max) / 2) + 14px));
+    bottom: 14px;
+    z-index: 25;
+    background: var(--marrom-escuro);
+    color: #fff;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 18px;
+    box-shadow: 0 3px 10px rgba(0,0,0,.3);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .2s ease;
+    border: none;
+    cursor: pointer;
+  }
+  #voltar-topo.visivel { opacity: 1; pointer-events: auto; }
+</style>
+</head>
+<body>
+
+<div id="app">
+  <header id="topo">
+    <h1>Catálogo Zuni Couros <span>toque numa categoria pra ir direto, ou numa foto pra ver mais fotos e chamar no WhatsApp 🧡</span></h1>
+    <nav id="menu"><!-- preenchido via JS --></nav>
+  </header>
+
+  <main id="conteudo"><!-- preenchido via JS --></main>
+
+  <footer id="rodape">
+    Zuni Couros — jogos americanos e deskpads em couro sintético dupla face.<br>
+    Dúvidas? <a id="rodape-whats" href="#" target="_blank" rel="noopener">Fale com a gente no WhatsApp</a>
+  </footer>
+</div>
+
+<button id="voltar-topo" aria-label="Voltar ao topo" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<div id="lightbox">
+  <button class="lb-fechar" aria-label="Fechar">✕</button>
+  <div class="lb-carrossel">
+    <button class="lb-nav lb-prev" aria-label="Foto anterior">‹</button>
+    <img id="lb-img" src="" alt="">
+    <button class="lb-nav lb-next" aria-label="Próxima foto">›</button>
+  </div>
+  <div class="lb-dots" id="lb-dots"></div>
+  <div class="lb-info">
+    <p class="lb-cor" id="lb-cor"></p>
+    <p class="lb-formato" id="lb-formato"></p>
+    <p class="lb-tamanhos" id="lb-tamanhos"></p>
+    <a class="lb-whats" id="lb-whats" href="#" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.5 0-9.96 4.46-9.96 9.96 0 1.76.46 3.45 1.32 4.95L2 22l5.2-1.36a9.9 9.9 0 0 0 4.84 1.23h.01c5.5 0 9.96-4.46 9.96-9.96S17.54 2 12.04 2Zm0 18.2h-.01a8.2 8.2 0 0 1-4.2-1.15l-.3-.18-3.09.81.82-3-.2-.31a8.24 8.24 0 0 1-1.26-4.4c0-4.55 3.7-8.25 8.25-8.25 2.2 0 4.27.86 5.83 2.42a8.19 8.19 0 0 1 2.41 5.83c0 4.55-3.7 8.25-8.25 8.25Zm4.52-6.18c-.25-.12-1.47-.72-1.69-.81-.23-.08-.4-.12-.56.13-.17.25-.65.81-.79.97-.15.17-.29.19-.54.06-.25-.12-1.04-.38-1.98-1.22-.73-.65-1.23-1.46-1.37-1.71-.15-.25-.02-.38.11-.51.11-.11.25-.29.37-.44.12-.15.16-.25.24-.42.08-.17.04-.31-.02-.44-.06-.12-.56-1.36-.77-1.85-.2-.5-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.87.86-.87 2.09 0 1.23.9 2.42 1.02 2.59.12.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.44.53.6.19 1.15.16 1.59.1.49-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.17-.48-.29Z"/></svg>
+      Chamar no WhatsApp
+    </a>
+  </div>
+</div>
+
+<script>
+const NUMERO_WHATSAPP = "5541984483455"; // número de testes — trocar pelo número definitivo da Zuni Couros
+
+const CATALOGO = [{"formato": "talher", "nome": "Talher", "titulo": "Jogo Americano c/ Bolso pra Talher", "itens": [{"slug": "talher_caramelo_vinho", "cor_display": "Caramelo / Vinho", "cor_frente": "Caramelo", "cor_verso": "Vinho", "qtds": [4, 5, 6, 8, 10, 12, 14, 15, 16], "images": ["img/talher_caramelo_vinho_01.jpg", "img/talher_caramelo_vinho_02.jpg", "img/talher_caramelo_vinho_03.jpg"], "link": "https://produto.mercadolivre.com.br/MLB-2604329114-jogo-americano-em-couro-dupla-face-8-unidades-t-_JM?attributes=COLOR_SECONDARY_COLOR%3AQ2FyYW1lbG8vVmluaG8gLSBtb2RlbG8gdGFsaGVy&picker=true&quantity=1", "mlbs": ["MLB2604329114", "MLB2612406820", "MLB2612415377", "MLB2613326431", "MLB2613353356", "MLB2613392044", "MLB2613401201", "MLB2613420683", "MLB2750460199"]}, {"slug": "talher_marrom-cafe_havana", "cor_display": "Marrom Café / Havana", "cor_frente": "Marrom café", "cor_verso": "Havana", "qtds": [4, 5, 6, 8, 10, 12, 14, 15, 16], "images": ["img/talher_marrom-cafe_havana_01.jpg", "img/talher_marrom-cafe_havana_02.jpg", "img/talher_marrom-cafe_havana_03.jpg"], "link": "https://produto.mercadolivre.com.br/MLB-2604329114-jogo-americano-em-couro-dupla-face-8-unidades-t-_JM?attributes=COLOR_SECONDARY_COLOR%3ATWFycm9tIGNhZsOpIC8gSGF2YW5hIC0gbW9kZWxvIHRhbGhlcg%3D%3D&quantity=1&picker=true", "mlbs": ["MLB2604329114", "MLB2612406820", "MLB2612415377", "MLB2613326431", "MLB2613353356", "MLB2613392044", "MLB2613401201", "MLB2613420683", "MLB2750460199"]}, {"slug": "talher_marrom-cafe_vinho", "cor_display": "Marrom Café / Vinho", "cor_frente": "Marrom Café", "cor_verso": "Vinho", "qtds": [4, 5, 6, 8, 10, 12, 14, 15, 16], "images": ["img/talher_marrom-cafe_vinho_01.jpg", "img/talher_marrom-cafe_vinho_02.jpg", "img/talher_marrom-cafe_vinho_03.jpg"], "link": "https://produto.mercadolivre.com.br/MLB-2604329114-jogo-americano-em-couro-dupla-face-8-unidades-t-_JM?attributes=COLOR_SECONDARY_COLOR%3ATWFycm9tIENhZsOpIC8gVmluaG8gLSBtb2RlbG8gdGFsaGVy&quantity=1&picker=true", "mlbs": ["MLB2604329114", "MLB2612406820", "MLB2612415377", "MLB2613326431", "MLB2613353356", "MLB2613392044", "MLB2613401201", "MLB2613420683", "MLB2750460199"]}, {"slug": "talher_preto_havana", "cor_display": "Preto / Havana", "cor_frente": "Preto", "cor_verso": "Havana", "qtds": [4, 5, 6, 8, 10, 12, 14, 15, 16], "images": ["img/talher_preto_havana_01.jpg", "img/talher_preto_havana_02.jpg", "img/talher_preto_havana_03.jpg"], "link": "https://produto.mercadolivre.com.br/MLB-2604329114-jogo-americano-em-couro-dupla-face-8-unidades-t-_JM?attributes=COLOR_SECONDARY_COLOR%3AUHJldG8gLyBIYXZhbmEgLSBtb2RlbG8gdGFsaGVy&quantity=1&picker=true", "mlbs": ["MLB2604329114", "MLB2612406820", "MLB2612415377", "MLB2613326431", "MLB2613353356", "MLB2613392044", "MLB2613401201", "MLB2613420683", "MLB2750460199"]}, {"slug": "talher_preto_marrom-cafe", "cor_display": "Preto / Marrom Café", "cor_frente": "Preto", "cor_verso": "Marrom café", "qtds": [4, 5, 6, 8, 10, 12, 14, 15, 16], "images": ["img/talher_preto_marrom-cafe_01.jpg", "img/talher_preto_marrom-cafe_02.jpg", "img/talher_preto_marrom-cafe_03.jpg"], "link": "https://produto.mercadolivre.com.br/MLB-2604329114-jogo-americano-em-couro-dupla-face-8-unidades-t-_JM?attributes=COLOR_SECONDARY_COLOR%3AUHJldG8gLyBNYXJyb20gY2Fmw6kgLSBtb2RlbG8gdGFsaGVy&quantity=1&picker=true", "mlbs": ["MLB2604329114", "MLB2612406820", "MLB2612415377", "MLB2613326431", "MLB2613353356", "MLB2613392044", "MLB2613401201", "MLB2613420683", "MLB2750460199"]}, {"slug": "talher_preto_vinho", "cor_display": "Preto / Vinho", "cor_frente": "Preto", "cor_verso": "vinho", "qtds": [4, 5, 6, 8, 10, 12, 14, 15, 16], "images": ["img/talher_preto_vinho_01.jpg", "img/talher_preto_vinho_02.jpg", "img/talher_preto_vinho_03.jpg"], "link": "https://produto.mercadolivre.com.br/MLB-2604329114-jogo-americano-em-couro-dupla-face-8-unidades-t-_JM?attributes=COLOR_SECONDARY_COLOR%3AUHJldG8gLyB2aW5obyAtIE1vZGVsbyB0YWxoZXI%3D&quantity=1&picker=true", "mlbs": ["MLB2604329114", "MLB2612406820", "MLB2612415377", "MLB2613326431", "MLB2613353356", "MLB2613392044", "MLB2613401201", "MLB2613420683", "MLB2750460199"]}]}, {"formato": "externo", "nome": "Externo", "titulo": "Jogo Americano Retangular (padrão)", "itens": [{"slug": "externo_caramelo_havana", "cor_display": "Caramelo / Havana", "cor_frente": "Caramelo", "cor_verso": "Havana", "qtds": [4, 5, 6, 8, 10, 12, 14], "images": ["img/externo_caramelo_havana_01.jpg", "img/externo_caramelo_havana_02.jpg", "img/externo_caramelo_havana_03.jpg"], "link": "https://produto.mercadolivre.com.br/MLB-2606198571-jogo-americano-em-couro-dupla-face-6-unidades-e-_JM?attributes=COLOR_SECONDARY_COLOR%3AQ2FyYW1lbG8vSGF2YW5hIGNvc3R1cmEgZXNjdXJh&picker=true&quantity=1", "mlbs": ["MLB2601768623", "MLB2605988484", "MLB2606097971", "MLB2606162224", "MLB2606192600", "MLB2606198571", "MLB2607125373"]}, {"slug": "externo_caramelo_vinho", "cor_display": "Caramelo / Vinho", "cor_frente": "Caramelo", "cor_verso": "Vinho", "qtds": [4, 5, 6, 8, 10, 12, 14], "images": ["img/externo_caramelo_vinho_01.jpg", "img/externo_caramelo_vinho_02.jpg", "img/externo_caramelo_vinho_03.jpg"], "link": "https://produto.mercadolivre.com.br/MLB-2606198571-jogo-americano-em-couro-dupla-face-6-unidades-e-_JM?attributes=COLOR_SECONDARY_COLOR%3AQ2FyYW1lbG8vVmluaG8gY29zdHVyYSBlc2N1cmE%3D&quantity=1&picker=true", "mlbs": ["MLB2601768623", "MLB2605988484", "MLB2606097971", "MLB2606162224", "MLB2606192600", "MLB2606198571", "MLB2607125373"]}, {"slug": "externo_marrom-cafe_marrom-cafe", "cor_display": "Marrom Café", "cor_frente": "Marrom café", "cor_verso": "Marrom café", "qtds": [4, 5, 6, 8, 10, 12, 14], "images": ["img/externo_marrom-cafe_marrom-cafe_01.jpg", "img/externo_marrom-cafe_marrom-cafe_02.jpg", "img/externo_marrom-cafe_marrom-cafe_03.jpg"], "link": "https://produto.mercadolivre.com.br/MLB-2606198571-jogo-americano-em-couro-dupla-face-6-unidades-e-_JM?attributes=COLOR_SECONDARY_COLOR%3ATWFycm9tIGNhZsOpLyBNYXJyb20gY2Fmw6kgY29zdHVyYSBlc2N1cmE%3D&quantity=1&picker=true", "mlbs": ["MLB2601768623", "MLB2605988484", "MLB2606097971", "MLB2606162224", "MLB2606192600", "MLB2606198571", "MLB2607125373"]}, {"slug": "externo_marrom-cafe_havana", "cor_display": "Marrom Café / Havana", "cor_frente": "Marrom café", "cor_verso": "Havana", "qtds": [4, 5, 6, 8, 10, 12, 14], "images": ["img/externo_marrom-cafe_havana_01.jpg", "img/externo_marrom-cafe_havana_02.jpg", "img/externo_marrom-cafe_havana_03.jpg"], "link": "https://produto.mercadolivre.com.br/MLB-2606198571-jogo-americano-em-couro-dupla-face-6-unidades-e-_JM?attributes=COLOR_SECONDARY_COLOR%3ATWFycm9tIGNhZsOpL0hhdmFuYSBjb3N0dXJhIGVzY3VyYQ%3D%3D&quantity=1&picker=true", "mlbs": ["MLB2601768623", "MLB2605988484", "MLB2606097971", "MLB2606162224", "MLB2606192600", "MLB2606198571", "MLB2607125373"]}, {"slug": "externo_marrom-cafe_vinho", "cor_display": "Marrom Café / Vinho", "cor_frente": "Marrom Café", "cor_verso": "Vinho", "qtds": [4, 5, 6, 8, 10, 12, 14], "images": ["img/externo_marrom-cafe_vinho_01.jpg", "img/externo_marrom-cafe_vinho_02.jpg", "img/externo_marrom-cafe_vinho_03.jpg"], "link": "https://produto.mercadolivre.com.br/MLB-2606198571-jogo-americano-em-couro-dupla-face-6-unidades-e-_JM?attributes=COLOR_SECONDARY_COLOR%3ATWFycm9tIENhZsOpIC8gVmluaG8gY29tIGNvc3R1cmEgZXNjdXJh&quantity=1&picker=true", "mlbs": ["MLB2601768623", "MLB2605988484", "MLB2606097971", "MLB2606162224", "MLB2606192600", "MLB2606198571", "MLB2607125373"]}, {"slug": "externo_preto_preto", "cor_display": "Preto", "cor_frente": "Preto", "cor_verso": "Preto", "qtds": [4, 5, 6, 8, 10, 12, 14], "images": ["img/externo_preto_preto_01.jpg", "img/externo_preto_preto_02.jpg", "img/externo_preto_preto_03.jpg"], "link": "https://produto.mercadolivre.com.br/MLB-2606198571-jogo-americano-em-couro-dupla-face-6-unidades-e-_JM?attributes=COLOR_SECONDARY_COLOR%3AUHJldG8vUHJldG8gY29zdHVyYSBlc2N1cmE%3D&quantity=1&picker=true", "mlbs": ["MLB2601768623", "MLB2605988484", "MLB2606097971", "MLB2606162224", "MLB2606192600", "MLB2606198571", "MLB2607125373"]}, {"slug": "externo_preto_caramelo", "cor_display": "Preto / Caramelo", "cor_frente": "Preto", "cor_verso": "Caramelo", "qtds": [4, 5, 6, 8, 10, 12, 14], "images": ["img/externo_preto_caramelo_01.jpg", "img/externo_preto_caramelo_02.jpg", "img/externo_preto_caramelo_03.jpg"], "link": "https://produto.mercadolivre.com.br/MLB-2606198571-jogo-americano-em-couro-dupla-face-6-unidades-e-_JM?attributes=COLOR_SECONDARY_COLOR%3AUHJldG8vQ2FyYW1lbG8gY29zdHVyYSBlc2N1cmE%3D&quantity=1&picker=true", "mlbs": ["MLB2601768623", "MLB2605988484", "MLB2606097971", "MLB2606162224", "MLB2606192600", "MLB2606198571", "MLB2607125373"]}, {"slug": "externo_preto_marrom-cafe", "cor_display": "Preto / Marrom Café", "cor_frente": "Preto", "cor_verso": "marrom café", "qtds": [4, 5, 6, 8, 10, 12, 14], "images": ["img/externo_preto_marrom-cafe_01.jpg", "img/externo_preto_marrom-cafe_02.jpg", "img/externo_preto_marrom-cafe_03.jpg"], "link": "https://produto.mercadolivre.com.br/MLB-2606198571-jogo-americano-em-couro-dupla-face-6-unidades-e-_JM?attributes=COLOR_SECONDARY_COLOR%3AUHJldG8gLyBtYXJyb20gY2Fmw6kgY29tIGNvc3R1cmEgZXNjdXJh&quantity=1&picker=true", "mlbs": ["MLB2601768623", "MLB2605988484", "MLB2606097971", "MLB2606162224", "MLB2606192600", "MLB2606198571", "MLB2607125373"]}, {"slug": "externo_preto_marrom-cafe-v2", "cor_display": "Preto / Marrom Café", "cor_frente": "Preto", "cor_verso": "Marrom café", "qtds": [4, 5, 6, 8, 10, 12, 14], "images": ["img/externo_preto_marrom-cafe-v2_01.jpg", "img/externo_preto_marrom-cafe-v2_02.jpg", "img/externo_preto_marrom-cafe-v2_03.jpg"], "link": "https://produto.mercadolivre.com.br/MLB-2606198571-jogo-americano-em-couro-dupla-face-6-unidades-e-_JM?attributes=COLOR_SECONDARY_COLOR%3AUHJldG8vTWFycm9tIGNhZsOpIGNvc3R1cmEgY3J1&quantity=1&picker=true", "mlbs": ["MLB2601768623", "MLB2605988484", "MLB2606097971", "MLB2606162224", "MLB2606192600", "MLB2606198571", "MLB2607125373"]}, {"slug": "externo_preto_vinho", "cor_display": "Preto / Vinho", "cor_frente": "Preto", "cor_verso": "Vinho", "qtds": [4, 5, 6, 8, 10, 12, 14], "images": ["img/externo_preto_vinho_01.jpg", "img/externo_preto_vinho_02.jpg", "img/externo_preto_vinho_03.jpg"], "link": "https://produto.mercadolivre.com.br/MLB-2606198571-jogo-americano-em-couro-dupla-face-6-unidades-e-_JM?attributes=COLOR_SECONDARY_COLOR%3AUHJldG8vVmluaG8gY29zdHVyYSBlc2N1cmE%3D&quantity=1&picker=true", "mlbs": ["MLB2601768623", "MLB2605988484", "MLB2606097971", "MLB2606162224", "MLB2606192600", "MLB2606198571", "MLB2607125373"]}, {"slug": "externo_verde_caramelo", "cor_display": "Verde / Caramelo", "cor_frente": "Verde", "cor_verso": "Caramelo", "qtds": [4, 5, 6, 8, 10, 12, 14], "images": ["img/externo_verde_caramelo_01.jpg", "img/externo_verde_caramelo_02.jpg", "img/externo_verde_caramelo_03.jpg"], "link": "https://produto.mercadolivre.com.br/MLB-2606198571-jogo-americano-em-couro-dupla-face-6-unidades-e-_JM?attributes=COLOR_SECONDARY_COLOR%3AVmVyZGUvQ2FyYW1lbG8gY29zdHVyYSBlc2N1cmE%3D&quantity=1&picker=true", "mlbs": ["MLB2601768623", "MLB2605988484", "MLB2606097971", "MLB2606162224", "MLB2606192600", "MLB2606198571", "MLB2607125373"]}, {"slug": "externo_verde_marrom-cafe", "cor_display": "Verde / Marrom Café", "cor_frente": "Verde", "cor_verso": "Marrom Café", "qtds": [4, 5, 6, 8, 10, 12, 14], "images": ["img/externo_verde_marrom-cafe_01.jpg", "img/externo_verde_marrom-cafe_02.jpg", "img/externo_verde_marrom-cafe_03.jpg"], "link": "https://produto.mercadolivre.com.br/MLB-2606198571-jogo-americano-em-couro-dupla-face-6-unidades-e-_JM?attributes=COLOR_SECONDARY_COLOR%3AVmVyZGUvTWFycm9tIENhZsOpIGNvc3R1cmEgZXNjdXJh&quantity=1&picker=true", "mlbs": ["MLB2601768623", "MLB2605988484", "MLB2606097971", "MLB2606162224", "MLB2606192600", "MLB2606198571", "MLB2607125373"]}, {"slug": "externo_verde_preto", "cor_display": "Verde / Preto", "cor_frente": "Verde", "cor_verso": "Preto", "qtds": [4, 5, 6, 8, 10, 12, 14], "images": ["img/externo_verde_preto_01.jpg", "img/externo_verde_preto_02.jpg", "img/externo_verde_preto_03.jpg"], "link": "https://produto.mercadolivre.com.br/MLB-2606198571-jogo-americano-em-couro-dupla-face-6-unidades-e-_JM?attributes=COLOR_SECONDARY_COLOR%3AVmVyZGUvUHJldG8gY29zdHVyYSBlc2N1cmE%3D&quantity=1&picker=true", "mlbs": ["MLB2601768623", "MLB2605988484", "MLB2606097971", "MLB2606162224", "MLB2606192600", "MLB2606198571", "MLB2607125373"]}, {"slug": "externo_verde_vinho", "cor_display": "Verde / Vinho", "cor_frente": "Verde", "cor_verso": "Vinho", "qtds": [4, 5, 6, 8, 10, 12, 14], "images": ["img/externo_verde_vinho_01.jpg", "img/externo_verde_vinho_02.jpg", "img/externo_verde_vinho_03.jpg"], "link": "https://produto.mercadolivre.com.br/MLB-2606198571-jogo-americano-em-couro-dupla-face-6-unidades-e-_JM?attributes=COLOR_SECONDARY_COLOR%3AVmVyZGUvVmluaG8gY29zdHVyYSBlc2N1cmE%3D&quantity=1&picker=true", "mlbs": ["MLB2601768623", "MLB2605988484", "MLB2606097971", "MLB2606162224", "MLB2606192600", "MLB2606198571", "MLB2607125373"]}]}, {"formato": "elipse", "nome": "Elipse", "titulo": "Jogo Americano Elipse", "itens": [{"slug": "elipse_caramelo_havana", "cor_display": "Caramelo / Havana", "cor_frente": "Caramelo", "cor_verso": "Havana", "qtds": [4, 6, 8, 10, 12], "images": ["img/elipse_caramelo_havana_01.jpg", "img/elipse_caramelo_havana_02.jpg", "img/elipse_caramelo_havana_03.jpg"], "link": "https://produto.mercadolivre.com.br/MLB-2607256324-jogo-americano-elipse-couro-dupla-face-8-unidades-brinde-_JM?attributes=COLOR_SECONDARY_COLOR%3AQ2FyYW1lbG8vSGF2YW5hIGNvc3R1cmEgZXNjdXJh&picker=true&quantity=1", "mlbs": ["MLB2607256324", "MLB2632072942", "MLB2632084413", "MLB2632091615", "MLB2633942215"]}, {"slug": "elipse_preto_caramelo", "cor_display": "Preto / Caramelo", "cor_frente": "Preto", "cor_verso": "Caramelo", "qtds": [4, 6, 8, 10, 12], "images": ["img/elipse_preto_caramelo_01.jpg", "img/elipse_preto_caramelo_02.jpg", "img/elipse_preto_caramelo_03.jpg"], "link": "https://produto.mercadolivre.com.br/MLB-2607256324-jogo-americano-elipse-couro-dupla-face-8-unidades-brinde-_JM?attributes=COLOR_SECONDARY_COLOR%3AUHJldG8vQ2FyYW1lbG8gY29zdHVyYSBlc2N1cmE%3D&quantity=1&picker=true", "mlbs": ["MLB2607256324", "MLB2632072942", "MLB2632084413", "MLB2632091615", "MLB2633942215"]}, {"slug": "elipse_preto_marrom-cafe", "cor_display": "Preto / Marrom Café", "cor_frente": "Preto", "cor_verso": "Marrom café", "qtds": [4, 6, 8, 10, 12], "images": ["img/elipse_preto_marrom-cafe_01.jpg", "img/elipse_preto_marrom-cafe_02.jpg", "img/elipse_preto_marrom-cafe_03.jpg"], "link": "https://produto.mercadolivre.com.br/MLB-2607256324-jogo-americano-elipse-couro-dupla-face-8-unidades-brinde-_JM?attributes=COLOR_SECONDARY_COLOR%3AUHJldG8vTWFycm9tIGNhZsOpIGNvc3R1cmEgZXNjdXJh&quantity=1&picker=true", "mlbs": ["MLB2607256324", "MLB2632072942", "MLB2632084413", "MLB2632091615", "MLB2633942215"]}, {"slug": "elipse_preto_vinho", "cor_display": "Preto / Vinho", "cor_frente": "Preto", "cor_verso": "Vinho", "qtds": [4, 6, 8, 10, 12], "images": ["img/elipse_preto_vinho_01.jpg", "img/elipse_preto_vinho_02.jpg", "img/elipse_preto_vinho_03.jpg"], "link": "https://produto.mercadolivre.com.br/MLB-2607256324-jogo-americano-elipse-couro-dupla-face-8-unidades-brinde-_JM?attributes=COLOR_SECONDARY_COLOR%3AUHJldG8vVmluaG8gY29zdHVyYSBlc2N1cmE%3D&quantity=1&picker=true", "mlbs": ["MLB2607256324", "MLB2632072942", "MLB2632084413", "MLB2632091615", "MLB2633942215"]}, {"slug": "elipse_verde_vinho", "cor_display": "Verde / Vinho", "cor_frente": "Verde", "cor_verso": "vinho", "qtds": [12], "images": ["img/elipse_verde_vinho_01.jpg", "img/elipse_verde_vinho_02.jpg", "img/elipse_verde_vinho_03.jpg"], "link": "https://produto.mercadolivre.com.br/MLB-2632072942-jogo-americano-elipse-couro-dupla-face-12-unidades-brinde-_JM?attributes=COLOR_SECONDARY_COLOR%3AVmVyZGUvdmluaG8gY29zdHVyYSBjcnU%3D&quantity=1&picker=true", "mlbs": ["MLB2632072942"]}, {"slug": "elipse_verde_vinho-v2", "cor_display": "Verde / Vinho", "cor_frente": "verde", "cor_verso": "vinho", "qtds": [8], "images": ["img/elipse_verde_vinho-v2_01.jpg", "img/elipse_verde_vinho-v2_02.jpg", "img/elipse_verde_vinho-v2_03.jpg"], "link": "https://produto.mercadolivre.com.br/MLB-2607256324-jogo-americano-elipse-couro-dupla-face-8-unidades-brinde-_JM?attributes=COLOR_SECONDARY_COLOR%3AdmVyZGUvdmluaG8%3D&quantity=1&picker=true", "mlbs": ["MLB2607256324"]}, {"slug": "elipse_verde-e-vinho", "cor_display": "Verde e Vinho", "cor_frente": "Verde e Vinho", "cor_verso": "", "qtds": [6], "images": ["img/elipse_verde-e-vinho_01.jpg", "img/elipse_verde-e-vinho_02.jpg", "img/elipse_verde-e-vinho_03.jpg"], "link": "https://produto.mercadolivre.com.br/MLB-2632091615-jogo-americano-elipse-couro-dupla-face-6-unidades-brinde-_JM?attributes=COLOR_SECONDARY_COLOR%3AVmVyZGUgZSBWaW5obw%3D%3D&quantity=1&picker=true", "mlbs": ["MLB2632091615"]}, {"slug": "elipse_verde-e-vinho-v2", "cor_display": "Verde e Vinho", "cor_frente": "Verde e Vinho", "cor_verso": "", "qtds": [4, 10], "images": ["img/elipse_verde-e-vinho-v2_01.jpg", "img/elipse_verde-e-vinho-v2_02.jpg", "img/elipse_verde-e-vinho-v2_03.jpg"], "link": "https://produto.mercadolivre.com.br/MLB-2632084413-jogo-americano-elipse-couro-dupla-face-10-unidades-brinde-_JM?attributes=COLOR_SECONDARY_COLOR%3AVmVyZGUgZSBWaW5obyBjb3N0dXJhIGNsYXJh&quantity=1&picker=true", "mlbs": ["MLB2632084413", "MLB2633942215"]}]}, {"formato": "redondo", "nome": "Redondo", "titulo": "Jogo Americano Redondo", "itens": [{"slug": "redondo_preto_caramelo", "cor_display": "Preto / Caramelo", "cor_frente": "Preto", "cor_verso": "Caramelo", "qtds": [4, 5, 6, 8, 10, 12], "images": ["img/redondo_preto_caramelo_01.jpg", "img/redondo_preto_caramelo_02.jpg", "img/redondo_preto_caramelo_03.jpg"], "link": "https://produto.mercadolivre.com.br/MLB-2616051794-jogo-americano-redondo-dupla-face-6-unidades-_JM", "mlbs": ["MLB2604348592", "MLB2616003872", "MLB2616051557", "MLB2616051794", "MLB2633981658", "MLB2633982498"]}, {"slug": "redondo_preto_marrom-cafe", "cor_display": "Preto / Marrom Café", "cor_frente": "Preto", "cor_verso": "marrom café", "qtds": [4, 5, 6, 8, 10, 12], "images": ["img/redondo_preto_marrom-cafe_01.jpg", "img/redondo_preto_marrom-cafe_02.jpg", "img/redondo_preto_marrom-cafe_03.jpg"], "link": "https://produto.mercadolivre.com.br/MLB-2616051794-jogo-americano-redondo-dupla-face-6-unidades-_JM?attributes=COLOR_SECONDARY_COLOR%3AUHJldG8gLyBtYXJyb20gY2Fmw6kgY29zdHVyYSBjbGFyYQ%3D%3D&picker=true&quantity=1", "mlbs": ["MLB2604348592", "MLB2616003872", "MLB2616051557", "MLB2616051794", "MLB2633981658", "MLB2633982498"]}]}, {"formato": "deskpad", "nome": "Deskpad", "titulo": "Deskpad de Couro Sintético", "itens": [{"slug": "deskpad_caramelo_havana", "cor_display": "Caramelo / Havana", "cor_frente": "Caramelo", "cor_verso": "Havana", "qtds": [1], "images": ["img/deskpad_caramelo_havana_01.jpg", "img/deskpad_caramelo_havana_02.jpg", "img/deskpad_caramelo_havana_03.jpg"], "link": "https://produto.mercadolivre.com.br/MLB-2625748334-deskpad-dupla-face-couro-sintetico-1-unidade-varias-cores-_JM?attributes=COLOR_SECONDARY_COLOR%3AQ2FyYW1lbG8vSGF2YW5hIGNvc3R1cmEgY3J1&picker=true&quantity=1", "mlbs": ["MLB2625748334"]}, {"slug": "deskpad_preto_marrom-cafe", "cor_display": "Preto / Marrom Café", "cor_frente": "Preto", "cor_verso": "Marrom café", "qtds": [1], "images": ["img/deskpad_preto_marrom-cafe_01.jpg", "img/deskpad_preto_marrom-cafe_02.jpg", "img/deskpad_preto_marrom-cafe_03.jpg"], "link": "https://produto.mercadolivre.com.br/MLB-2625748334-deskpad-dupla-face-couro-sintetico-1-unidade-varias-cores-_JM?attributes=COLOR_SECONDARY_COLOR%3AUHJldG8vTWFycm9tIGNhZsOpIGNvc3R1cmEgY3J1&quantity=1&picker=true", "mlbs": ["MLB2625748334"]}, {"slug": "deskpad_preto_vinho", "cor_display": "Preto / Vinho", "cor_frente": "Preto", "cor_verso": "Vinho", "qtds": [1], "images": ["img/deskpad_preto_vinho_01.jpg", "img/deskpad_preto_vinho_02.jpg", "img/deskpad_preto_vinho_03.jpg"], "link": "https://produto.mercadolivre.com.br/MLB-2625748334-deskpad-dupla-face-couro-sintetico-1-unidade-varias-cores-_JM?attributes=COLOR_SECONDARY_COLOR%3AUHJldG8vVmluaG8gY29zdHVyYSBjcnU%3D&quantity=1&picker=true", "mlbs": ["MLB2625748334"]}, {"slug": "deskpad_preto-e-marrom-cafe", "cor_display": "Preto e Marrom Café", "cor_frente": "Preto e marrom café", "cor_verso": "", "qtds": [1], "images": ["img/deskpad_preto-e-marrom-cafe_01.jpg", "img/deskpad_preto-e-marrom-cafe_02.jpg", "img/deskpad_preto-e-marrom-cafe_03.jpg"], "link": "https://produto.mercadolivre.com.br/MLB-2625748334-deskpad-dupla-face-couro-sintetico-1-unidade-varias-cores-_JM?attributes=COLOR_SECONDARY_COLOR%3AUHJldG8gZSBtYXJyb20gY2Fmw6k%3D&quantity=1&picker=true", "mlbs": ["MLB2625748334"]}]}, {"formato": "unitario", "nome": "Unitário", "titulo": "Jogo Americano Avulso (1 unidade)", "itens": [{"slug": "unitario_sortidas", "cor_display": "Cores Sortidas", "cor_frente": "sortidas", "cor_verso": "", "qtds": [1], "images": ["img/unitario_sortidas_01.jpg"], "link": "https://www.mercadolivre.com.br/jogo-americano-em-couro-sintetico-1-unidade/up/MLBU4131260073?pdp_filters=item_id%3AMLB7015758784", "mlbs": ["MLB7015758784"]}]}];
+
+function textoMensagem(item, grupo) {
+  const cor = item.cor_display;
+  const txt = `Olá! Tenho interesse neste ${grupo.titulo} — cor ${cor}. Pode confirmar tamanhos e preços disponíveis?\n${item.link}`;
+  return txt;
+}
+
+function linkWhats(item, grupo) {
+  return `https://wa.me/${NUMERO_WHATSAPP}?text=${encodeURIComponent(textoMensagem(item, grupo))}`;
+}
+
+function badgesTamanho(item) {
+  if (!item.qtds || !item.qtds.length) return '<span class="card-sem-tamanho">consultar tamanhos</span>';
+  return item.qtds.map(q => `<span class="tam-badge">${q} un</span>`).join('');
+}
+
+function montarPagina() {
+  const menu = document.getElementById('menu');
+  const conteudo = document.getElementById('conteudo');
+
+  CATALOGO.forEach(grupo => {
+    const pill = document.createElement('a');
+    pill.className = 'pill';
+    pill.href = '#' + grupo.formato;
+    pill.dataset.anchor = grupo.formato;
+    pill.textContent = grupo.nome;
+    menu.appendChild(pill);
+
+    const secao = document.createElement('section');
+    secao.className = 'secao';
+    secao.id = grupo.formato;
+
+    const titulo = document.createElement('h2');
+    titulo.className = 'secao-titulo';
+    titulo.textContent = grupo.titulo;
+    secao.appendChild(titulo);
+
+    const subtitulo = document.createElement('p');
+    subtitulo.className = 'secao-subtitulo';
+    subtitulo.textContent = `${grupo.itens.length} ${grupo.itens.length === 1 ? 'cor disponível' : 'cores disponíveis'}`;
+    secao.appendChild(subtitulo);
+
+    const grid = document.createElement('div');
+    grid.className = 'grid';
+
+    grupo.itens.forEach((item, idx) => {
+      const card = document.createElement('button');
+      card.className = 'card';
+      card.type = 'button';
+      card.addEventListener('click', () => abrirLightbox(grupo.formato, idx));
+
+      card.innerHTML = `
+        <div class="card-foto-wrap">
+          <img src="${item.images[0]}" loading="lazy" alt="${grupo.titulo} cor ${item.cor_display}">
+          ${item.images.length > 1 ? `<span class="card-badge-fotos">📷 ${item.images.length}</span>` : ''}
+        </div>
+        <div class="card-info">
+          <p class="card-cor">${item.cor_display}</p>
+          <div class="card-tamanhos">${badgesTamanho(item)}</div>
+        </div>`;
+      grid.appendChild(card);
+    });
+
+    secao.appendChild(grid);
+    conteudo.appendChild(secao);
+  });
+
+  const rodapeWhats = document.getElementById('rodape-whats');
+  rodapeWhats.href = `https://wa.me/${NUMERO_WHATSAPP}?text=${encodeURIComponent('Olá! Vim pelo catálogo da Zuni Couros e gostaria de mais informações.')}`;
+}
+
+/* ---------- lightbox / carrossel ---------- */
+let lbGrupo = null, lbItem = null, lbFoto = 0;
+
+function abrirLightbox(formato, idx) {
+  lbGrupo = CATALOGO.find(g => g.formato === formato);
+  lbItem = lbGrupo.itens[idx];
+  lbFoto = 0;
+  atualizarLightbox();
+  document.getElementById('lightbox').classList.add('aberto');
+  document.body.style.overflow = 'hidden';
+}
+
+function fecharLightbox() {
+  document.getElementById('lightbox').classList.remove('aberto');
+  document.body.style.overflow = '';
+}
+
+function atualizarLightbox() {
+  document.getElementById('lb-img').src = lbItem.images[lbFoto];
+  document.getElementById('lb-img').alt = `${lbGrupo.titulo} cor ${lbItem.cor_display} - foto ${lbFoto + 1}`;
+  document.getElementById('lb-cor').textContent = lbItem.cor_display;
+  document.getElementById('lb-formato').textContent = lbGrupo.titulo;
+  document.getElementById('lb-tamanhos').textContent = lbItem.qtds && lbItem.qtds.length
+    ? 'Tamanhos: ' + lbItem.qtds.map(q => q + ' un').join(' · ')
+    : 'Consulte os tamanhos disponíveis';
+  document.getElementById('lb-whats').href = linkWhats(lbItem, lbGrupo);
+
+  const dots = document.getElementById('lb-dots');
+  dots.innerHTML = '';
+  if (lbItem.images.length > 1) {
+    lbItem.images.forEach((_, i) => {
+      const d = document.createElement('span');
+      d.className = 'lb-dot' + (i === lbFoto ? ' ativo' : '');
+      dots.appendChild(d);
+    });
+  }
+  const mostrarSetas = lbItem.images.length > 1;
+  document.querySelector('.lb-prev').style.display = mostrarSetas ? 'flex' : 'none';
+  document.querySelector('.lb-next').style.display = mostrarSetas ? 'flex' : 'none';
+}
+
+function proximaFoto(delta) {
+  if (!lbItem || lbItem.images.length < 2) return;
+  lbFoto = (lbFoto + delta + lbItem.images.length) % lbItem.images.length;
+  atualizarLightbox();
+}
+
+function iniciarInteracoes() {
+  document.querySelector('.lb-fechar').addEventListener('click', fecharLightbox);
+  document.querySelector('.lb-prev').addEventListener('click', () => proximaFoto(-1));
+  document.querySelector('.lb-next').addEventListener('click', () => proximaFoto(1));
+  document.getElementById('lightbox').addEventListener('click', e => {
+    if (e.target.id === 'lightbox') fecharLightbox();
+  });
+  document.addEventListener('keydown', e => {
+    if (!document.getElementById('lightbox').classList.contains('aberto')) return;
+    if (e.key === 'Escape') fecharLightbox();
+    if (e.key === 'ArrowLeft') proximaFoto(-1);
+    if (e.key === 'ArrowRight') proximaFoto(1);
+  });
+
+  // swipe simples no carrossel
+  let touchStartX = null;
+  const carrossel = document.querySelector('.lb-carrossel');
+  carrossel.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, {passive: true});
+  carrossel.addEventListener('touchend', e => {
+    if (touchStartX === null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(dx) > 40) proximaFoto(dx < 0 ? 1 : -1);
+    touchStartX = null;
+  }, {passive: true});
+
+  // menu ativo conforme scroll
+  const pills = Array.prototype.slice.call(document.querySelectorAll('#menu .pill'));
+  const secoes = Array.prototype.slice.call(document.querySelectorAll('.secao'));
+  const botaoTopo = document.getElementById('voltar-topo');
+  if ('IntersectionObserver' in window) {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const id = entry.target.id;
+        pills.forEach(p => p.classList.toggle('ativo', p.dataset.anchor === id));
+      });
+    }, { rootMargin: '-120px 0px -70% 0px', threshold: 0 });
+    secoes.forEach(s => obs.observe(s));
+  }
+  window.addEventListener('scroll', () => {
+    botaoTopo.classList.toggle('visivel', window.scrollY > 900);
+  }, { passive: true });
+}
+
+montarPagina();
+iniciarInteracoes();
+</script>
+
+</body>
+</html>
