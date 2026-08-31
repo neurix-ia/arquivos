@@ -72,7 +72,7 @@
   .pill.sub { background: rgba(255,255,255,.08); font-weight: 500; font-size: 12px; padding: 6px 12px; }
   .separador-menu { flex: 0 0 auto; width: 1px; background: rgba(255,255,255,.3); margin: 4px 2px; }
   .secao { scroll-margin-top: 96px; }
-  .page-img { display: block; width: 100%; height: auto; }
+  .page-img { display: block; width: 100%; height: auto; aspect-ratio: 800 / 1422; }
 
   /* ---- areas clicaveis invisiveis em cima da foto de cada brinquedo ---- */
   .pagina-wrap { position: relative; }
@@ -579,6 +579,27 @@
   document.querySelectorAll('a.hotspot[href]').forEach(function (a) {
     a.href = a.href.replace(/(wa\.me\/)\d+/, '$1' + tel);
   });
+})();
+</script>
+
+<script>
+// WhatsApp costuma cortar #hash no preview. A tool manda ?s=<id> alem do hash.
+// Imagens lazy deixam a secao com altura 0 no 1o paint: precisa scroll de novo apos load.
+(function () {
+  var params = new URLSearchParams(window.location.search);
+  var id = (params.get('s') || params.get('secao') || (window.location.hash || '').replace(/^#/, '') || '').trim();
+  if (!id || !/^[a-z0-9-]+$/i.test(id)) return;
+  var el = document.getElementById(id);
+  if (!el) return;
+  var img = el.querySelector('.page-img');
+  if (img) img.loading = 'eager';
+  function go() {
+    el.scrollIntoView({ behavior: 'instant', block: 'start' });
+  }
+  go();
+  if (img && !img.complete) img.addEventListener('load', go, { once: true });
+  window.addEventListener('load', go);
+  [80, 300, 800, 1600].forEach(function (ms) { setTimeout(go, ms); });
 })();
 </script>
 
