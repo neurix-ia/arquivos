@@ -1,0 +1,564 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<title>Vendi — preview (não é o CRM real)</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: #1a1410; color: #f5ece0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    min-height: 100vh;
+  }
+  .wrap { max-width: 520px; margin: 0 auto; padding: 20px; }
+  .banner {
+    background: #3a2a10; color: #e8c07d; font-size: 12px; text-align: center;
+    padding: 6px 10px; border-bottom: 1px solid #5a4020;
+  }
+  .top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; font-size: 14px; color: #b8a892; }
+  .top a, .top button { color: #d98e3c; background: none; border: none; font-size: 14px; cursor: pointer; }
+  h1 { font-size: 20px; margin: 0 0 6px; }
+  p.sub { font-size: 14px; color: #b8a892; margin: 0 0 24px; }
+  #login { display: flex; flex-direction: column; gap: 10px; max-width: 360px; margin: 60px auto; }
+  #login input {
+    padding: 12px; border-radius: 10px; border: 1px solid #4a3f30; background: #2a221a; color: #f5ece0; font-size: 15px;
+  }
+  #login button {
+    padding: 14px; border-radius: 10px; border: none; background: #d98e3c; color: #1a1410; font-weight: 600; font-size: 15px; cursor: pointer;
+  }
+  #app { display: none; }
+  .rec-btn {
+    width: 100%; display: flex; flex-direction: column; align-items: center; gap: 10px;
+    padding: 26px 16px; border-radius: 16px; background: #2a221a; border: none; margin-bottom: 4px; cursor: pointer;
+  }
+  .rec-btn:disabled { opacity: 0.6; cursor: default; }
+  .rec-dot {
+    width: 76px; height: 76px; border-radius: 999px; background: #c0392b; display: flex; align-items: center; justify-content: center; font-size: 30px;
+  }
+  .rec-dot.pulsing { animation: pulse 1s infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.55; } }
+  .timer { font-size: 20px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .timer span { font-size: 12px; font-weight: 400; color: #b8a892; }
+  .rec-status { font-size: 14px; color: #b8a892; }
+  audio { width: 100%; margin-bottom: 8px; }
+  .transcript-box { margin-bottom: 16px; }
+  .transcript-box label { font-size: 12px; color: #b8a892; display: block; margin-bottom: 4px; }
+  .transcript-box textarea {
+    width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #4a3f30; background: #2a221a; color: #f5ece0;
+    font-size: 14px; font-style: italic; resize: vertical; font-family: inherit;
+  }
+  .reprocess-btn { margin-top: 6px; font-size: 12px; color: #d98e3c; background: none; border: none; cursor: pointer; }
+  .reprocess-btn:disabled { opacity: 0.4; }
+  label.field-label { font-size: 12px; color: #b8a892; display: block; margin-bottom: 4px; }
+  .foto-btn {
+    border: 2px dashed #4a3f30; border-radius: 12px; text-align: center; color: #b8a892; width: 100%;
+    padding: 20px; margin-bottom: 4px; background: none; cursor: pointer; font-size: 14px;
+  }
+  .foto-btn img { max-width: 100%; border-radius: 8px; }
+  .hint { font-size: 12px; color: #b8a892; margin: 0 0 16px; }
+  .sales-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .sales-head label { font-size: 12px; color: #b8a892; }
+  .sales-head button { font-size: 12px; color: #d98e3c; background: none; border: none; cursor: pointer; }
+  .sale-card { background: #241c15; border: 1px solid #4a3f30; border-radius: 12px; padding: 14px; margin-bottom: 12px; }
+  .sale-card-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .sale-card-head span { font-size: 12px; font-weight: 600; color: #b8a892; }
+  .sale-card-head button { font-size: 12px; color: #c0392b; background: none; border: none; cursor: pointer; }
+  .sale-card input {
+    width: 100%; padding: 11px; border-radius: 10px; border: 1px solid #4a3f30; background: #2a221a; color: #f5ece0;
+    font-size: 15px; margin-bottom: 10px;
+  }
+  .sale-card input.plate { text-transform: uppercase; }
+  .qty-row {
+    display: flex; justify-content: space-between; align-items: center; background: #2a221a; border-radius: 12px;
+    padding: 10px 14px; margin-bottom: 8px;
+  }
+  .qty-row.active { border: 1px solid #d98e3c; }
+  .qty-row .label { font-weight: 600; font-size: 14px; }
+  .qty-row .ctrl { display: flex; align-items: center; gap: 6px; }
+  .qty-row button {
+    width: 36px; height: 36px; border-radius: 999px; font-size: 17px; font-weight: 700; cursor: pointer; border: 1px solid #4a3f30;
+    background: #1a1410; color: #f5ece0;
+  }
+  .qty-row button.plus { background: #d98e3c; color: #1a1410; border-color: #d98e3c; }
+  .qty-row .val { min-width: 26px; text-align: center; font-size: 15px; font-weight: 700; }
+  .send-btn {
+    width: 100%; margin-top: 8px; padding: 16px; border-radius: 10px; border: none; background: #d98e3c; color: #1a1410;
+    font-size: 15px; font-weight: 600; cursor: pointer;
+  }
+  .send-btn:disabled { opacity: 0.4; cursor: default; }
+  .toast {
+    position: fixed; bottom: 20px; left: 20px; right: 20px; text-align: center; font-weight: 600; padding: 14px; border-radius: 10px;
+    color: white; z-index: 50; max-width: 480px; margin: 0 auto;
+  }
+  .toast.ok { background: #4a9c5d; }
+  .toast.err { background: #c0392b; }
+</style>
+</head>
+<body>
+
+<div class="banner">🧪 PREVIEW isolado — não é o CRM real. Testando UX antes de migrar pro app oficial.</div>
+
+<div class="wrap">
+  <div id="login">
+    <h1>Entrar</h1>
+    <input id="login-email" type="email" placeholder="e-mail" autocomplete="username" />
+    <input id="login-pass" type="password" placeholder="senha" autocomplete="current-password" />
+    <button onclick="doLogin()">Entrar</button>
+    <p id="login-error" style="color:#e08585;font-size:13px;"></p>
+  </div>
+
+  <div id="app">
+    <div class="top">
+      <div id="top-user">👤</div>
+      <div style="display:flex;gap:14px;">
+        <button onclick="doLogout()">sair</button>
+      </div>
+    </div>
+
+    <h1>Nova venda</h1>
+    <p class="sub">
+      Toque quando o sinal abrir pra começar a gravar, toque de novo quando fechar. Dá pra vender pra mais de um
+      carro na mesma gravação — feche cada venda dizendo a placa ("vendido um italiano pro carro tal").
+    </p>
+
+    <button class="rec-btn" id="rec-btn" onclick="toggleGravacao()">
+      <div class="rec-dot" id="rec-dot">🎙️</div>
+      <div class="timer" id="timer">00:00 <span>/ 02:00</span></div>
+      <div class="rec-status" id="rec-status">Toque quando o sinal abrir</div>
+    </button>
+
+    <audio id="audio-preview" controls style="display:none;"></audio>
+
+    <div class="transcript-box" id="transcript-box" style="display:none;">
+      <label>Transcrição (edite se algo saiu errado)</label>
+      <textarea id="transcript" rows="3" placeholder="Nada foi transcrito ainda" oninput="onTranscriptEdit()"></textarea>
+      <button class="reprocess-btn" id="reprocess-btn" onclick="reprocessar()">🔁 Reprocessar texto</button>
+    </div>
+
+    <label class="field-label">Foto da placa (opcional, vale pra todas as vendas desta gravação)</label>
+    <button class="foto-btn" id="foto-btn" onclick="document.getElementById('foto-input').click()">📷 Toque pra tirar a foto da placa</button>
+    <input id="foto-input" type="file" accept="image/*" capture="environment" style="display:none;" onchange="onFoto(event)" />
+    <p class="hint">Pode tirar a foto antes ou depois do áudio — não interrompe a gravação.</p>
+
+    <div class="sales-head">
+      <label id="sales-label">Nenhuma venda ainda</label>
+      <button onclick="adicionarVenda()">+ adicionar venda</button>
+    </div>
+    <p class="hint" id="sales-empty-hint">Grave um áudio pra preencher sozinho, ou toque em "+ adicionar venda" pra preencher na mão.</p>
+
+    <div id="sales-list"></div>
+
+    <button class="send-btn" id="send-btn" style="display:none;" onclick="enviar()">Registrar venda</button>
+  </div>
+</div>
+
+<div id="toast" class="toast" style="display:none;"></div>
+
+<script>
+const API_BASE = "https://crm-staging.wbtech.dev";
+const AUDIO_MAX_SECONDS = 120;
+
+let accessToken = localStorage.getItem("vendi_preview_token") || null;
+let sales = [];
+let saleIdCounter = 0;
+let mediaRecorder = null;
+let mediaStream = null;
+let audioChunks = [];
+let audioBlob = null;
+let fotoBlobData = null; // { blob, mime }
+let recStart = null;
+let timerInterval = null;
+let gravando = false;
+let hasAudio = false;
+
+function showToast(msg, isError) {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.className = "toast " + (isError ? "err" : "ok");
+  t.style.display = "block";
+  setTimeout(() => { t.style.display = "none"; }, 4000);
+}
+
+async function api(path, options) {
+  options = options || {};
+  const headers = options.headers || {};
+  if (accessToken) headers["Authorization"] = "Bearer " + accessToken;
+  if (!(options.body instanceof FormData) && options.body && !headers["Content-Type"]) {
+    headers["Content-Type"] = "application/json";
+  }
+  const res = await fetch(API_BASE + path, { ...options, headers });
+  return res;
+}
+
+async function doLogin() {
+  const email = document.getElementById("login-email").value.trim();
+  const pass = document.getElementById("login-pass").value;
+  document.getElementById("login-error").textContent = "";
+  try {
+    const res = await fetch(API_BASE + "/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password: pass }),
+    });
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}));
+      document.getElementById("login-error").textContent = body.detail || "Login falhou.";
+      return;
+    }
+    const data = await res.json();
+    accessToken = data.access_token;
+    localStorage.setItem("vendi_preview_token", accessToken);
+    document.getElementById("top-user").textContent = "👤 " + email;
+    document.getElementById("login").style.display = "none";
+    document.getElementById("app").style.display = "block";
+  } catch (e) {
+    document.getElementById("login-error").textContent = "Erro ao conectar.";
+  }
+}
+
+function doLogout() {
+  accessToken = null;
+  localStorage.removeItem("vendi_preview_token");
+  document.getElementById("app").style.display = "none";
+  document.getElementById("login").style.display = "flex";
+}
+
+// Se já tem token salvo, tenta ir direto (não valida — só assume, próxima
+// chamada que falhar com 401 volta pro login).
+if (accessToken) {
+  document.getElementById("login").style.display = "none";
+  document.getElementById("app").style.display = "block";
+  document.getElementById("top-user").textContent = "👤 logado";
+}
+
+function makeSaleId() {
+  saleIdCounter += 1;
+  return "sale-" + saleIdCounter;
+}
+function emptySale() {
+  return { id: makeSaleId(), phone: "", plate: "", italiano: 0, integral: 0 };
+}
+function saleFromExtracted(ex) {
+  return {
+    id: makeSaleId(),
+    phone: ex.phone || "",
+    plate: ex.plate || "",
+    italiano: ex.quantity_italiano != null ? ex.quantity_italiano : (ex.quantity_total && !ex.quantity_integral ? ex.quantity_total : 0),
+    integral: ex.quantity_integral != null ? ex.quantity_integral : 0,
+  };
+}
+
+function renderSales() {
+  const list = document.getElementById("sales-list");
+  const label = document.getElementById("sales-label");
+  const emptyHint = document.getElementById("sales-empty-hint");
+  const sendBtn = document.getElementById("send-btn");
+
+  if (sales.length === 0) {
+    label.textContent = "Nenhuma venda ainda";
+    emptyHint.style.display = "block";
+    sendBtn.style.display = "none";
+  } else {
+    label.textContent = sales.length > 1 ? sales.length + " vendas nesta gravação" : "Venda";
+    emptyHint.style.display = "none";
+    sendBtn.style.display = "block";
+  }
+
+  list.innerHTML = "";
+  sales.forEach((venda, idx) => {
+    const card = document.createElement("div");
+    card.className = "sale-card";
+    card.innerHTML = `
+      <div class="sale-card-head">
+        <span>${sales.length > 1 ? "Venda " + (idx + 1) : "Dados do cliente"}</span>
+        ${sales.length > 1 ? `<button onclick="removerVenda('${venda.id}')">remover</button>` : ""}
+      </div>
+      <label class="field-label">WhatsApp do cliente</label>
+      <input type="tel" inputmode="tel" placeholder="(41) 99999-9999" value="${venda.phone}"
+        oninput="alterarCampo('${venda.id}','phone',this.value)" />
+      <label class="field-label">Placa (opcional)</label>
+      <input type="text" class="plate" maxlength="10" placeholder="ABC1D23" value="${venda.plate}"
+        oninput="alterarCampo('${venda.id}','plate',this.value.toUpperCase())" />
+      <label class="field-label">Produtos</label>
+      <div class="qty-row ${venda.italiano > 0 ? "active" : ""}">
+        <div class="label">🍞 Pão Italiano</div>
+        <div class="ctrl">
+          <button onclick="alterarQtd('${venda.id}','italiano',-1)">−</button>
+          <div class="val">${venda.italiano}</div>
+          <button class="plus" onclick="alterarQtd('${venda.id}','italiano',1)">+</button>
+        </div>
+      </div>
+      <div class="qty-row ${venda.integral > 0 ? "active" : ""}">
+        <div class="label">🌾 Pão Integral</div>
+        <div class="ctrl">
+          <button onclick="alterarQtd('${venda.id}','integral',-1)">−</button>
+          <div class="val">${venda.integral}</div>
+          <button class="plus" onclick="alterarQtd('${venda.id}','integral',1)">+</button>
+        </div>
+      </div>
+    `;
+    list.appendChild(card);
+  });
+  updateSendBtnLabel();
+}
+
+function alterarCampo(id, campo, valor) {
+  const s = sales.find((x) => x.id === id);
+  if (s) s[campo] = valor;
+}
+function alterarQtd(id, tipo, delta) {
+  const s = sales.find((x) => x.id === id);
+  if (s) { s[tipo] = Math.max(0, s[tipo] + delta); renderSales(); }
+}
+function removerVenda(id) {
+  if (sales.length > 1) { sales = sales.filter((x) => x.id !== id); renderSales(); }
+}
+function adicionarVenda() {
+  sales.push(emptySale());
+  renderSales();
+}
+function vendasValidas() {
+  return sales.filter((s) => s.phone.trim().replace(/\D/g, "").length >= 8 && (s.italiano + s.integral) > 0);
+}
+function updateSendBtnLabel() {
+  const btn = document.getElementById("send-btn");
+  const v = vendasValidas();
+  btn.disabled = v.length === 0;
+  btn.textContent = v.length > 1 ? `Registrar ${v.length} vendas` : "Registrar venda";
+}
+
+function fmtTimer(s) {
+  const mm = String(Math.floor(s / 60)).padStart(2, "0");
+  const ss = String(s % 60).padStart(2, "0");
+  return mm + ":" + ss;
+}
+
+async function toggleGravacao() {
+  if (!gravando) {
+    try {
+      mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    } catch (e) {
+      showToast("Não consegui acessar o microfone", true);
+      return;
+    }
+    audioChunks = [];
+    document.getElementById("audio-preview").style.display = "none";
+    document.getElementById("transcript-box").style.display = "none";
+    document.getElementById("transcript").value = "";
+
+    mediaRecorder = new MediaRecorder(mediaStream);
+    mediaRecorder.ondataavailable = (e) => { if (e.data.size > 0) audioChunks.push(e.data); };
+    mediaRecorder.onstop = () => {
+      audioBlob = new Blob(audioChunks, { type: "audio/webm" });
+      hasAudio = audioBlob.size > 0;
+      if (hasAudio) {
+        const url = URL.createObjectURL(audioBlob);
+        const audioEl = document.getElementById("audio-preview");
+        audioEl.src = url;
+        audioEl.style.display = "block";
+        void transcreverAudio(audioBlob);
+      }
+    };
+    mediaRecorder.start();
+    gravando = true;
+    recStart = Date.now();
+    document.getElementById("rec-dot").classList.add("pulsing");
+    document.getElementById("rec-status").textContent = "Sinal aberto — toque quando fechar";
+    timerInterval = setInterval(() => {
+      const s = Math.floor((Date.now() - recStart) / 1000);
+      document.getElementById("timer").innerHTML = fmtTimer(s) + ' <span>/ 02:00</span>';
+      if (s >= AUDIO_MAX_SECONDS) pararGravacao("limit");
+    }, 500);
+  } else {
+    pararGravacao("manual");
+  }
+}
+
+function pararGravacao(reason) {
+  if (mediaRecorder && mediaRecorder.state !== "inactive") {
+    mediaRecorder.stop();
+    mediaStream.getTracks().forEach((t) => t.stop());
+  }
+  gravando = false;
+  document.getElementById("rec-dot").classList.remove("pulsing");
+  if (timerInterval) clearInterval(timerInterval);
+  document.getElementById("rec-status").textContent =
+    reason === "limit" ? "Limite de 2 min atingido — encerrada automaticamente"
+                        : "Encerrada. Toque quando o sinal abrir de novo";
+}
+
+async function transcreverAudio(blob) {
+  const btn = document.getElementById("rec-btn");
+  btn.disabled = true;
+  document.getElementById("rec-status").textContent = "Transcrevendo áudio…";
+  try {
+    const form = new FormData();
+    form.append("audio", blob, "vendi-audio.webm");
+    const res = await api("/api/vendi/transcribe", { method: "POST", body: form });
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}));
+      showToast(body.detail || "Não consegui transcrever o áudio. Preencha manualmente.", true);
+      return;
+    }
+    const data = await res.json();
+    document.getElementById("transcript").value = data.transcript || "";
+    document.getElementById("transcript-box").style.display = data.transcript ? "block" : "none";
+    aplicarVendasExtraidas(data.sales || []);
+    const achouAlgo = (data.sales || []).some((s) => s.phone || s.plate || s.quantity_italiano || s.quantity_integral || s.quantity_total);
+    const n = (data.sales || []).length;
+    if (achouAlgo) {
+      showToast(n > 1 ? `Áudio transcrito — ${n} vendas detectadas, confira antes de enviar` : "Áudio transcrito — confira os campos antes de enviar");
+    } else {
+      showToast("Áudio transcrito, mas não achei os dados. Preencha manualmente.", true);
+    }
+  } catch (e) {
+    showToast("Erro ao transcrever o áudio. Preencha manualmente.", true);
+  } finally {
+    btn.disabled = false;
+    document.getElementById("rec-status").textContent = "Encerrada. Toque quando o sinal abrir de novo";
+  }
+}
+
+function aplicarVendasExtraidas(extracted) {
+  if (!extracted.length) return;
+  sales = extracted.map(saleFromExtracted);
+  renderSales();
+}
+
+function onTranscriptEdit() {}
+
+async function reprocessar() {
+  const text = document.getElementById("transcript").value.trim();
+  if (!text) return;
+  const btn = document.getElementById("reprocess-btn");
+  btn.disabled = true;
+  btn.textContent = "Reprocessando…";
+  try {
+    const res = await api("/api/vendi/parse-transcript", {
+      method: "POST",
+      body: JSON.stringify({ transcript: text }),
+    });
+    const data = await res.json();
+    aplicarVendasExtraidas(data.sales || []);
+    showToast(`Reprocessado — ${(data.sales || []).length} venda(s) detectada(s)`);
+  } catch (e) {
+    showToast("Erro ao reprocessar o texto.", true);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "🔁 Reprocessar texto";
+  }
+}
+
+function onFoto(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  compressImageFile(file).then((blob) => {
+    fotoBlobData = { blob, mime: "image/jpeg" };
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const btn = document.getElementById("foto-btn");
+      btn.innerHTML = `<img src="${e.target.result}" />`;
+    };
+    reader.readAsDataURL(blob);
+  }).catch(() => showToast("Não consegui processar a foto. Tenta de novo.", true));
+}
+
+async function compressImageFile(file, maxSide, quality) {
+  maxSide = maxSide || 1280; quality = quality || 0.72;
+  const bitmap = await createImageBitmap(file);
+  const scale = Math.min(1, maxSide / Math.max(bitmap.width, bitmap.height));
+  const w = Math.max(1, Math.round(bitmap.width * scale));
+  const h = Math.max(1, Math.round(bitmap.height * scale));
+  const canvas = document.createElement("canvas");
+  canvas.width = w; canvas.height = h;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) { bitmap.close(); return file; }
+  ctx.drawImage(bitmap, 0, 0, w, h);
+  bitmap.close();
+  const blob = await new Promise((resolve) => canvas.toBlob((b) => resolve(b), "image/jpeg", quality));
+  return blob || file;
+}
+
+function blobToBase64(blob) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onloadend = () => resolve(String(reader.result || "").split(",")[1] || "");
+    reader.onerror = reject;
+    reader.readAsDataURL(blob);
+  });
+}
+
+async function enviar() {
+  if (gravando) {
+    pararGravacao("manual");
+    await new Promise((r) => setTimeout(r, 350));
+  }
+  const validas = vendasValidas();
+  if (!validas.length) {
+    showToast("Cada venda precisa de WhatsApp + pelo menos 1 produto", true);
+    return;
+  }
+  const btn = document.getElementById("send-btn");
+  btn.disabled = true;
+  btn.textContent = "Enviando…";
+
+  const fotoBase64 = fotoBlobData ? await blobToBase64(fotoBlobData.blob) : "";
+  const audioBase64 = audioBlob ? await blobToBase64(audioBlob) : null;
+  const audioMime = audioBlob ? (audioBlob.type || "audio/webm") : null;
+
+  let ok = 0, falhas = 0;
+  for (const venda of validas) {
+    try {
+      const payload = {
+        vendedor: document.getElementById("top-user").textContent.replace("👤 ", ""),
+        cliente_whatsapp_digitado: venda.phone.trim(),
+        pao_italiano_qtd: venda.italiano,
+        pao_integral_qtd: venda.integral,
+        foto_base64: fotoBase64,
+        foto_mime: "image/jpeg",
+        audio_base64: audioBase64,
+        audio_mime: audioMime,
+        placa_texto: venda.plate.trim() || null,
+        timestamp: new Date().toISOString(),
+        geolocalizacao: null,
+      };
+      const res = await api("/api/vendi/submit", { method: "POST", body: JSON.stringify(payload) });
+      if (res.ok) ok += 1; else falhas += 1;
+    } catch (e) {
+      falhas += 1;
+    }
+  }
+  btn.disabled = false;
+  if (falhas === 0) {
+    showToast(ok > 1 ? `${ok} vendas registradas!` : "Venda registrada!");
+    resetTudo();
+  } else {
+    showToast(`${ok} registrada(s), ${falhas} falhou(aram) — confira e reenvia`, true);
+    updateSendBtnLabel();
+  }
+}
+
+function resetTudo() {
+  audioBlob = null;
+  fotoBlobData = null;
+  audioChunks = [];
+  hasAudio = false;
+  gravando = false;
+  sales = [];
+  document.getElementById("timer").innerHTML = '00:00 <span>/ 02:00</span>';
+  document.getElementById("rec-status").textContent = "Toque quando o sinal abrir";
+  document.getElementById("audio-preview").style.display = "none";
+  document.getElementById("transcript-box").style.display = "none";
+  document.getElementById("transcript").value = "";
+  document.getElementById("foto-btn").innerHTML = "📷 Toque pra tirar a foto da placa";
+  document.getElementById("foto-input").value = "";
+  renderSales();
+}
+
+renderSales();
+</script>
+
+</body>
+</html>
