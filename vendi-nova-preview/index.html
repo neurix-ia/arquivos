@@ -213,10 +213,17 @@ async function toggleGravacao() {
     document.getElementById("detect-hint").textContent = "";
     document.getElementById("send-btn").disabled = true;
 
-    mediaRecorder = new MediaRecorder(mediaStream);
+    // iOS Safari não suporta webm — só grava em audio/mp4. Deixa o navegador
+    // escolher o formato suportado em vez de fixar um só (era o bug: o Blob
+    // levava a etiqueta "audio/webm" mesmo quando os bytes eram mp4, e isso
+    // quebrava tanto o player local quanto a transcrição no backend).
+    const mimeCandidates = ["audio/mp4", "audio/webm;codecs=opus", "audio/webm", "audio/aac"];
+    const supportedMime = mimeCandidates.find((m) => window.MediaRecorder && MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(m));
+    mediaRecorder = supportedMime ? new MediaRecorder(mediaStream, { mimeType: supportedMime }) : new MediaRecorder(mediaStream);
     mediaRecorder.ondataavailable = (e) => { if (e.data.size > 0) audioChunks.push(e.data); };
     mediaRecorder.onstop = () => {
-      audioBlob = new Blob(audioChunks, { type: "audio/webm" });
+      const actualMime = mediaRecorder.mimeType || "audio/webm";
+      audioBlob = new Blob(audioChunks, { type: actualMime });
       if (audioBlob.size > 0) {
         const url = URL.createObjectURL(audioBlob);
         const audioEl = document.getElementById("audio-preview");
@@ -280,8 +287,9 @@ async function transcreverAudio(blob) {
   btn.disabled = true;
   document.getElementById("rec-status").textContent = "Transcrevendo áudio…";
   try {
+    const ext = (blob.type || "").includes("mp4") ? "mp4" : (blob.type || "").includes("aac") ? "aac" : "webm";
     const form = new FormData();
-    form.append("audio", blob, "vendi-audio.webm");
+    form.append("audio", blob, `vendi-audio.${ext}`);
     const res = await api("/api/vendi/transcribe", { method: "POST", body: form });
     if (!res.ok) {
       const body = await res.json().catch(() => ({}));
