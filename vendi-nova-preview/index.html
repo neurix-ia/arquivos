@@ -136,7 +136,22 @@ async function api(path, options) {
   if (!(options.body instanceof FormData) && options.body && !headers["Content-Type"]) {
     headers["Content-Type"] = "application/json";
   }
-  return fetch(API_BASE + path, { ...options, headers });
+  const res = await fetch(API_BASE + path, { ...options, headers });
+  if (res.status === 401) {
+    sessionExpired();
+  }
+  return res;
+}
+
+/** Login (JWT do Supabase) expira depois de 1h. Sem refresh_token implementado
+ * aqui (preview simples) — se qualquer chamada voltar 401, desloga e pede
+ * login de novo em vez de deixar o erro cru aparecer pro vendedor. */
+function sessionExpired() {
+  accessToken = null;
+  localStorage.removeItem("vendi_preview_token");
+  document.getElementById("app").style.display = "none";
+  document.getElementById("login").style.display = "flex";
+  document.getElementById("login-error").textContent = "Sessão expirou (fica 1h) — faça login de novo.";
 }
 
 async function doLogin() {
