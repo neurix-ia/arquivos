@@ -1,0 +1,182 @@
+#!/usr/bin/env python3
+"""Confere ofertas do catálogo Zuni contra os anúncios ML.
+
+Falha (exit 1) se:
+  (a) oferta.qtd diferente da quantidade do anúncio daquele mlb
+  (b) mlb dentro da url diferente de oferta.mlb
+  (c) cor em attributes= fora das variações daquele anúncio
+  (d) produto/cor do catálogo sem equivalência
+  (e) quantidade duplicada no mesmo produto
+"""
+
+from __future__ import annotations
+
+import base64
+import json
+import sys
+import urllib.parse
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+ANUNCIOS = ROOT / "catalogo-zuni" / "data" / "ml_anuncios.json"
+EQUIV = ROOT / "catalogo-zuni" / "data" / "equivalencia_cores.json"
+CATALOGO = ROOT / "catalogo-zuni" / "catalogo_data.json"
+INDEX = ROOT / "catalogo-zuni" / "index.html"
+
+
+def load(path: Path):
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def extract_array(text: str, marker: str) -> str:
+    start = text.find(marker)
+    if start < 0:
+        raise SystemExit(f"marcador ausente: {marker}")
+    i = start + len(marker)
+    while i < len(text) and text[i].isspace():
+        i += 1
+    depth = 0
+    in_str = False
+    esc = False
+    for j in range(i, len(text)):
+        c = text[j]
+        if in_str:
+            if esc:
+                esc = False
+            elif c == "\\":
+                esc = True
+            elif c == '"':
+                in_str = False
+            continue
+        if c == '"':
+            in_str = True
+        elif c == "[":
+            depth += 1
+        elif c == "]":
+            depth -= 1
+            if depth == 0:
+                return text[i : j + 1]
+    raise SystemExit("array CATALOGO não fecha")
+
+
+def mlb_na_url(url: str) -> str | None:
+    marker = "MLB-"
+    i = url.find(marker)
+    if i >= 0:
+        j = i + len(marker)
+        k = j
+        while k < len(url) and url[k].isdigit():
+            k += 1
+        if k > j:
+            return "MLB" + url[j:k]
+    token = "item_id%3AMLB"
+    i = url.find(token)
+    if i < 0:
+        token = "item_id=MLB"
+        i = url.find(token)
+    if i >= 0:
+        j = i + len(token)
+        k = j
+        while k < len(url) and url[k].isdigit():
+            k += 1
+        if k > j:
+            return "MLB" + url[j:k]
+    return None
+
+
+def cor_no_attributes(url: str) -> str | None:
+    query = urllib.parse.urlparse(url).query
+    if not query:
+        return None
+    attrs = urllib.parse.parse_qs(query, keep_blank_values=True).get("attributes")
+    if not attrs or not attrs[0]:
+        return None
+    raw = attrs[0]
+    prefix = "COLOR_SECONDARY_COLOR:"
+    if not raw.startswith(prefix):
+        return raw
+    payload = raw[len(prefix) :]
+    try:
+        return base64.b64decode(payload).decode("utf-8")
+    except Exception:
+        return payload
+
+
+def main() -> int:
+    ads = {a["mlb"]: a for a in load(ANUNCIOS)["anuncios"]}
+    pares = {(p["formato"], p["slug"]): p for p in load(EQUIV)["pares"]}
+    catalogo = load(CATALOGO)
+    html_cat = json.loads(extract_array(INDEX.read_text(encoding="utf-8"), "const CATALOGO ="))
+    falhas = []
+    if html_cat != catalogo:
+        falhas.append(("sync", "-", "-", "d", "CATALOGO do index.html diverge de catalogo_data.json"))
+
+    por_formato = {}
+    for grupo in catalogo:
+        fmt = grupo["formato"]
+        stats = por_formato.setdefault(fmt, {"botoes": 0, "ok": 0})
+        for item in grupo["itens"]:
+            slug = item["slug"]
+            par = pares.get((fmt, slug))
+            if par is None or par.get("cor_catalogo") != item.get("cor_display"):
+                falhas.append((fmt, slug, "-", "d", "produto/cor sem equivalência"))
+            ofertas = item.get("ofertas") or []
+            qtds = [o.get("qtd") for o in ofertas]
+            if len(qtds) != len(set(qtds)):
+                falhas.append((fmt, slug, "-", "e", "quantidade duplicada no produto"))
+            for oferta in ofertas:
+                stats["botoes"] += 1
+                motivos = []
+                mlb = oferta.get("mlb")
+                url = oferta.get("url") or ""
+                qtd = oferta.get("qtd")
+                ad = ads.get(mlb)
+                if ad is None:
+                    motivos.append(("a", f"mlb {mlb} ausente em ml_anuncios"))
+                else:
+                    if ad["quantidade"] != qtd:
+                        motivos.append(("a", f"qtd {qtd} != anúncio {ad['quantidade']}"))
+                    if ad["formato"] != fmt:
+                        motivos.append(("a", f"formato {fmt} != anúncio {ad['formato']}"))
+                achado = mlb_na_url(url)
+                if achado != mlb:
+                    motivos.append(("b", f"mlb na url {achado} != {mlb}"))
+                cor = cor_no_attributes(url)
+                if ad is not None and cor is not None:
+                    nomes = {v["cor"] for v in ad["variations"]}
+                    if cor not in nomes:
+                        motivos.append(("c", f"cor {cor!r} fora das variações"))
+                if par is not None and ad is not None:
+                    esperadas = [v for v in ad["variations"] if v["cor"] in par["cores_ml"]]
+                    urls = {v["url"] for v in esperadas}
+                    if url not in urls:
+                        motivos.append(("c", "url não é a variação equivalente desse anúncio"))
+                if "qtds" in item or "mlbs" in item or "link" in item:
+                    motivos.append(("a", "produto ainda tem qtds/mlbs/link"))
+                if motivos:
+                    for codigo, msg in motivos:
+                        falhas.append((fmt, slug, qtd, codigo, msg))
+                else:
+                    stats["ok"] += 1
+
+    ordem = ["talher", "externo", "elipse", "redondo", "deskpad"]
+    extras = [f for f in por_formato if f not in ordem]
+    total_b = total_ok = 0
+    for fmt in ordem + extras:
+        st = por_formato.get(fmt, {"botoes": 0, "ok": 0})
+        total_b += st["botoes"]
+        total_ok += st["ok"]
+        print(f"{fmt}: {st['botoes']} botoes / {st['ok']} corretos")
+    print(f"total: {total_b} botoes / {total_ok} corretos")
+    faltando = [f for f in falhas if f[3] == "d"]
+    print(f"cores sem equivalencia: {len(faltando)}")
+    if falhas:
+        print(f"falhas: {len(falhas)}")
+        for fmt, slug, qtd, codigo, msg in falhas:
+            print(f"  [{codigo}] {fmt} {slug} qtd={qtd}: {msg}")
+        return 1
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
