@@ -1,0 +1,12 @@
+name: Checar catalogo Zuni
+
+on:
+  pull_request:
+
+jobs:
+  ofertas:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Conferir links ML
+        run: python3 scripts/checar_catalogo_zuni
