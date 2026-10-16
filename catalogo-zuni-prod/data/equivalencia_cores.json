@@ -1,0 +1,279 @@
+{
+ "pares": [
+  {
+   "formato": "deskpad",
+   "slug": "deskpad_caramelo_havana",
+   "cor_catalogo": "Caramelo / Havana",
+   "cores_ml": [
+    "Caramelo/Havana costura cru"
+   ]
+  },
+  {
+   "formato": "deskpad",
+   "slug": "deskpad_preto-e-marrom-cafe",
+   "cor_catalogo": "Preto e Marrom Café",
+   "cores_ml": [
+    "Preto e marrom café"
+   ]
+  },
+  {
+   "formato": "deskpad",
+   "slug": "deskpad_preto_marrom-cafe",
+   "cor_catalogo": "Preto / Marrom Café",
+   "cores_ml": [
+    "Preto/Marrom café costura cru"
+   ]
+  },
+  {
+   "formato": "deskpad",
+   "slug": "deskpad_preto_vinho",
+   "cor_catalogo": "Preto / Vinho",
+   "cores_ml": [
+    "Preto/Vinho costura cru"
+   ]
+  },
+  {
+   "formato": "elipse",
+   "slug": "elipse_caramelo_havana",
+   "cor_catalogo": "Caramelo / Havana",
+   "cores_ml": [
+    "Caramelo/Havana costura escura"
+   ]
+  },
+  {
+   "formato": "elipse",
+   "slug": "elipse_preto_caramelo",
+   "cor_catalogo": "Preto / Caramelo",
+   "cores_ml": [
+    "Preto/Caramelo costura escura"
+   ]
+  },
+  {
+   "formato": "elipse",
+   "slug": "elipse_preto_marrom-cafe",
+   "cor_catalogo": "Preto / Marrom Café",
+   "cores_ml": [
+    "Preto/Marrom café costura escura"
+   ]
+  },
+  {
+   "formato": "elipse",
+   "slug": "elipse_preto_vinho",
+   "cor_catalogo": "Preto / Vinho",
+   "cores_ml": [
+    "Preto/Vinho costura escura"
+   ]
+  },
+  {
+   "formato": "elipse",
+   "slug": "elipse_verde-e-vinho",
+   "cor_catalogo": "Verde e Vinho",
+   "cores_ml": [
+    "Verde e Vinho"
+   ]
+  },
+  {
+   "formato": "elipse",
+   "slug": "elipse_verde-e-vinho-v2",
+   "cor_catalogo": "Verde e Vinho",
+   "cores_ml": [
+    "Verde e Vinho costura clara"
+   ]
+  },
+  {
+   "formato": "elipse",
+   "slug": "elipse_verde_vinho",
+   "cor_catalogo": "Verde / Vinho",
+   "cores_ml": [
+    "Verde/vinho costura cru"
+   ]
+  },
+  {
+   "formato": "elipse",
+   "slug": "elipse_verde_vinho-v2",
+   "cor_catalogo": "Verde / Vinho",
+   "cores_ml": [
+    "verde/vinho"
+   ]
+  },
+  {
+   "formato": "externo",
+   "slug": "externo_caramelo_havana",
+   "cor_catalogo": "Caramelo / Havana",
+   "cores_ml": [
+    "Caramelo/Havana costura escura"
+   ]
+  },
+  {
+   "formato": "externo",
+   "slug": "externo_caramelo_vinho",
+   "cor_catalogo": "Caramelo / Vinho",
+   "cores_ml": [
+    "Caramelo/Vinho costura escura"
+   ]
+  },
+  {
+   "formato": "externo",
+   "slug": "externo_marrom-cafe_havana",
+   "cor_catalogo": "Marrom Café / Havana",
+   "cores_ml": [
+    "Marrom café/Havana costura escura"
+   ]
+  },
+  {
+   "formato": "externo",
+   "slug": "externo_marrom-cafe_marrom-cafe",
+   "cor_catalogo": "Marrom Café",
+   "cores_ml": [
+    "Marrom café/ Marrom café costura escura"
+   ]
+  },
+  {
+   "formato": "externo",
+   "slug": "externo_marrom-cafe_vinho",
+   "cor_catalogo": "Marrom Café / Vinho",
+   "cores_ml": [
+    "Marrom café/Vinho costura escura",
+    "Marrom Café / Vinho com costura escura"
+   ]
+  },
+  {
+   "formato": "externo",
+   "slug": "externo_preto_caramelo",
+   "cor_catalogo": "Preto / Caramelo",
+   "cores_ml": [
+    "Preto/Caramelo costura escura"
+   ]
+  },
+  {
+   "formato": "externo",
+   "slug": "externo_preto_marrom-cafe",
+   "cor_catalogo": "Preto / Marrom Café",
+   "cores_ml": [
+    "Preto/Marrom café costura escura",
+    "Preto / marrom café com costura escura"
+   ]
+  },
+  {
+   "formato": "externo",
+   "slug": "externo_preto_marrom-cafe-v2",
+   "cor_catalogo": "Preto / Marrom Café",
+   "cores_ml": [
+    "Preto/Marrom café costura cru"
+   ]
+  },
+  {
+   "formato": "externo",
+   "slug": "externo_preto_preto",
+   "cor_catalogo": "Preto",
+   "cores_ml": [
+    "Preto/Preto costura escura"
+   ]
+  },
+  {
+   "formato": "externo",
+   "slug": "externo_preto_vinho",
+   "cor_catalogo": "Preto / Vinho",
+   "cores_ml": [
+    "Preto/Vinho costura escura"
+   ]
+  },
+  {
+   "formato": "externo",
+   "slug": "externo_verde_caramelo",
+   "cor_catalogo": "Verde / Caramelo",
+   "cores_ml": [
+    "Verde/Caramelo costura escura"
+   ]
+  },
+  {
+   "formato": "externo",
+   "slug": "externo_verde_marrom-cafe",
+   "cor_catalogo": "Verde / Marrom Café",
+   "cores_ml": [
+    "Verde/Marrom Café costura escura",
+    "Verde/Marrom café costura escura"
+   ]
+  },
+  {
+   "formato": "externo",
+   "slug": "externo_verde_preto",
+   "cor_catalogo": "Verde / Preto",
+   "cores_ml": [
+    "Verde/Preto costura escura"
+   ]
+  },
+  {
+   "formato": "externo",
+   "slug": "externo_verde_vinho",
+   "cor_catalogo": "Verde / Vinho",
+   "cores_ml": [
+    "Verde/Vinho costura escura"
+   ]
+  },
+  {
+   "formato": "redondo",
+   "slug": "redondo_preto_caramelo",
+   "cor_catalogo": "Preto / Caramelo",
+   "cores_ml": [
+    "Preto / Caramelo costura escura"
+   ]
+  },
+  {
+   "formato": "redondo",
+   "slug": "redondo_preto_marrom-cafe",
+   "cor_catalogo": "Preto / Marrom Café",
+   "cores_ml": [
+    "Preto / marrom café costura clara"
+   ]
+  },
+  {
+   "formato": "talher",
+   "slug": "talher_caramelo_vinho",
+   "cor_catalogo": "Caramelo / Vinho",
+   "cores_ml": [
+    "Caramelo/Vinho - modelo talher"
+   ]
+  },
+  {
+   "formato": "talher",
+   "slug": "talher_marrom-cafe_havana",
+   "cor_catalogo": "Marrom Café / Havana",
+   "cores_ml": [
+    "Marrom café / Havana - modelo talher"
+   ]
+  },
+  {
+   "formato": "talher",
+   "slug": "talher_marrom-cafe_vinho",
+   "cor_catalogo": "Marrom Café / Vinho",
+   "cores_ml": [
+    "Marrom Café / Vinho - modelo talher"
+   ]
+  },
+  {
+   "formato": "talher",
+   "slug": "talher_preto_havana",
+   "cor_catalogo": "Preto / Havana",
+   "cores_ml": [
+    "Preto / Havana - modelo talher"
+   ]
+  },
+  {
+   "formato": "talher",
+   "slug": "talher_preto_marrom-cafe",
+   "cor_catalogo": "Preto / Marrom Café",
+   "cores_ml": [
+    "Preto / Marrom café - modelo talher"
+   ]
+  },
+  {
+   "formato": "talher",
+   "slug": "talher_preto_vinho",
+   "cor_catalogo": "Preto / Vinho",
+   "cores_ml": [
+    "Preto / vinho - Modelo talher"
+   ]
+  }
+ ]
+}
